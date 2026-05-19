@@ -121,3 +121,84 @@
 - Waveform and particles are CSS/Framer Motion visuals, not real audio-reactive analysis yet.
 - Audio behavior is still simulated by `MockAudioMixer`.
 - Weather remains a placeholder.
+
+## 2026-05-19 Emotional Companion Refinement
+
+### Implemented
+
+- Refined the existing UI without rebuilding the app from scratch.
+- Strengthened `EmotionalWaveform.tsx` so the visual responds more emotionally to app state:
+  - quiet breathing for idle / paused
+  - subtle thinking motion while AI understands the user
+  - more active particles and waveform during AI speaking
+  - stronger but still soft movement during music fade-in
+  - gentle rhythmic motion while playing
+- Added explicit AI thinking states:
+  - 正在理解你的情绪
+  - 正在寻找适合这份心情的声音
+  - 正在准备给你的开场白
+  - AI DJ 正在说话
+  - 音乐正在慢慢靠近
+- Changed the emotion input area from a manual recommendation action into an AI listening entry:
+  - New framing: “让 Echo Soul 听懂此刻的你”
+  - New CTA: “让 Echo Soul 听一听”
+- Removed the song language preference UI completely.
+- Removed language preference from the local recommendation ranking path so mock AI can choose Chinese or English songs by inferred mood and song texture.
+- Updated the mock AI provider to infer emotion from user text instead of requiring a manual mood selection.
+- Expanded Chinese recommendation explanations to mention musical details such as rhythm, arrangement, vocal texture, melody, production style, and emotional fit.
+
+### Verification
+
+- Ran `npm run lint`: passed.
+- Ran `npm run build`: passed.
+- Searched `src/` and confirmed the old language preference UI and old CTA are gone.
+- Opened `http://127.0.0.1:5173` in the browser.
+- Verified the new Echo Soul input prompt and CTA render.
+- Verified the AI thinking flow appears before the AI speaking / music ducking / fade-in states.
+- Verified the recommendation explanation appears in Chinese and includes concrete musical reasoning.
+
+### Known Limitations
+
+- Emotional waveform is still state-driven, not real audio-reactive.
+- AI reasoning remains mocked.
+- Voice playback and music playback remain simulated.
+
+## 2026-05-19 Minimal AI Input And Button Motion Refinement
+
+### Implemented
+
+- Refined the existing UI without rebuilding the app.
+- Replaced the large emotion textarea module with a minimal horizontal AI input bar.
+- Changed the input placeholder to “今天发生了什么，或现在是什么感觉？”.
+- Removed the large “让 Echo Soul 听一听” CTA button.
+- Added a small circular submit button with an upward arrow icon.
+- Added shared Framer Motion button presets:
+  - `buttonMotion`
+  - `iconButtonMotion`
+  - `pillMotion`
+- Applied unified motion behavior to:
+  - play / pause
+  - next song
+  - AI submit
+  - playlist queue toggle
+  - menu button
+- Refined button feedback so hover slightly scales up, adds subtle glow, brightens borders, and shifts gradient softly.
+- Refined tap feedback so controls scale down gently with tighter glow.
+- Kept the Echo Soul brand, central AI emotional stage, waveform, dark cinematic background, soft glow, and Chinese AI DJ direction intact.
+
+### Verification
+
+- Ran `npm run lint`: passed.
+- Ran `npm run build`: passed.
+- Searched `src/` and confirmed the old textarea, old large CTA, language preference UI, and `PreferencePanel` references are gone.
+- Opened `http://127.0.0.1:5173` in the browser.
+- Verified the page renders the new single-line AI input with circular submit button.
+- Verified there is no textarea in the DOM.
+- Verified submitting from the circular button triggers the AI thinking state.
+- Verified no horizontal overflow at the inspected desktop viewport.
+- Browser page console errors from the app: none observed.
+
+### Known Limitations
+
+- Button motion is refined for current controls; future controls should reuse the shared motion presets.
+- Input remains text-only; voice input is not implemented yet.

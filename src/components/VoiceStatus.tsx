@@ -9,9 +9,12 @@ interface VoiceStatusProps {
 
 const statusText: Record<PlaybackStatus, string> = {
   idle: '等待你的情绪信号',
+  understanding: '正在理解你的情绪',
+  searching: '正在寻找适合这份心情的声音',
+  preparing: '正在准备给你的开场白',
   'voice-speaking': 'AI DJ 正在说话',
   'music-ducked': '音乐保持低音量',
-  'fading-in': '音乐淡入中',
+  'fading-in': '音乐正在慢慢靠近',
   playing: '正在播放',
   paused: '已暂停',
 }

@@ -1,11 +1,8 @@
 export type SongLanguage = 'zh' | 'en'
-export type SongLanguagePreference = 'zh' | 'en' | 'any'
 export type SongEnergy = 'low' | 'medium' | 'high'
 
 export interface UserMusicPreferences {
-  mood: string
   genres: string[]
-  language: SongLanguagePreference
 }
 
 export interface Song {

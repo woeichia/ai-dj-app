@@ -7,24 +7,19 @@ import { EmotionInput } from './components/EmotionInput'
 import { NowPlayingCard } from './components/NowPlayingCard'
 import { PlayerControls } from './components/PlayerControls'
 import { PlaylistQueue } from './components/PlaylistQueue'
-import { PreferencePanel } from './components/PreferencePanel'
 import { RecommendationCard } from './components/RecommendationCard'
 import { TimeWeatherCard } from './components/TimeWeatherCard'
 import { VoiceStatus } from './components/VoiceStatus'
+import { iconButtonMotion } from './components/motionPresets'
 import { mockAIProvider } from './providers/ai/mockAIProvider'
 import { mockMusicProvider } from './providers/music/MockMusicProvider'
 import { mockVoiceProvider } from './providers/voice/mockVoiceProvider'
 import type { DJRecommendation } from './types/ai'
 import type { PlaybackStatus } from './types/audio'
-import type { Song, SongLanguagePreference, UserMusicPreferences } from './types/music'
-
-const moods = ['疲惫', '想念', '孤独', '放空', '释然']
+import type { Song, UserMusicPreferences } from './types/music'
 
 function App() {
   const [emotionText, setEmotionText] = useState('今天有点累，但不想马上睡。')
-  const [selectedMood, setSelectedMood] = useState('疲惫')
-  const [language, setLanguage] = useState<SongLanguagePreference>('any')
-  const [selectedGenres, setSelectedGenres] = useState<string[]>(['华语流行'])
   const [recommendation, setRecommendation] = useState<DJRecommendation | null>(null)
   const [queue, setQueue] = useState<Song[]>([])
   const [status, setStatus] = useState<PlaybackStatus>('idle')
@@ -53,9 +48,7 @@ function App() {
   )
 
   const preferences: UserMusicPreferences = {
-    mood: selectedMood,
-    genres: selectedGenres,
-    language,
+    genres: [],
   }
 
   async function startRecommendation(offset = 0): Promise<void> {
@@ -66,10 +59,14 @@ function App() {
 
     setError(undefined)
     setIsBusy(true)
-    setStatus('idle')
+    setStatus('understanding')
 
     try {
+      await wait(760)
+      setStatus('searching')
       const songs = await mockMusicProvider.listSongs()
+      await wait(680)
+      setStatus('preparing')
       const orderedSongs = rotateSongs(songs, offset)
       const nextRecommendation = await mockAIProvider.createRecommendation(
         {
@@ -81,6 +78,7 @@ function App() {
         orderedSongs,
       )
       const voice = await mockVoiceProvider.synthesize(nextRecommendation.spokenIntro)
+      await wait(520)
 
       setQueue(orderedSongs.filter((song) => song.id !== nextRecommendation.song.id))
       setRecommendation(nextRecommendation)
@@ -92,14 +90,6 @@ function App() {
     } finally {
       setIsBusy(false)
     }
-  }
-
-  function handleGenreToggle(genre: string): void {
-    setSelectedGenres((currentGenres) =>
-      currentGenres.includes(genre)
-        ? currentGenres.filter((item) => item !== genre)
-        : [...currentGenres, genre],
-    )
   }
 
   function handleTogglePlay(): void {
@@ -143,11 +133,20 @@ function App() {
 
       <div className="experience-frame">
         <header className="topbar">
-          <button className="ghost-menu" type="button" aria-label="打开情绪菜单">
+          <motion.button
+            className="ghost-menu"
+            type="button"
+            aria-label="打开情绪菜单"
+            variants={iconButtonMotion}
+            initial="rest"
+            animate="rest"
+            whileHover="hover"
+            whileTap="tap"
+          >
             <span />
             <span />
             <span />
-          </button>
+          </motion.button>
           <div className="brand-mark">
             <span>Echo Soul</span>
             <small>中文 AI 情绪 DJ</small>
@@ -178,18 +177,9 @@ function App() {
         <section className="conversation-dock">
           <EmotionInput
             value={emotionText}
-            selectedMood={selectedMood}
-            moods={moods}
             error={error}
             onChange={setEmotionText}
-            onMoodChange={setSelectedMood}
             onSubmit={() => void startRecommendation()}
-          />
-          <PreferencePanel
-            language={language}
-            selectedGenres={selectedGenres}
-            onLanguageChange={setLanguage}
-            onGenreToggle={handleGenreToggle}
           />
         </section>
 
@@ -197,6 +187,12 @@ function App() {
       </div>
     </main>
   )
+}
+
+function wait(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms)
+  })
 }
 
 function rotateSongs(songs: Song[], offset: number): Song[] {

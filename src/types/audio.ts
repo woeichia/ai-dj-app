@@ -2,6 +2,9 @@ import type { Song } from './music'
 
 export type PlaybackStatus =
   | 'idle'
+  | 'understanding'
+  | 'searching'
+  | 'preparing'
   | 'voice-speaking'
   | 'music-ducked'
   | 'fading-in'
