@@ -1,113 +1,130 @@
 # Echo Soul Design Bible
 
-Echo Soul is a Chinese AI emotional companion that happens to recommend music. The experience should feel like entering a private late-night emotional space: cinematic, quiet, intimate, and responsive to the user's mood. It is not a dashboard, not a Spotify clone, and not a productivity app.
+Echo Soul is a cinematic Chinese emotional AI music universe. It should feel like an emotional AI presence that understands feelings and communicates through music, not like a dashboard, SaaS product, Spotify clone, productivity app, or normal chatbot.
 
-## Emotional Atmosphere
+## Core Feeling
 
-- Deep night, low light, soft air, and restrained glow.
-- The AI presence is central; playback controls are secondary.
-- Music appears as emotional resonance, not as a catalog.
-- UI copy stays in natural Simplified Chinese, short and companion-like.
-- Empty states should feel like quiet invitation, not instruction.
+- Immersive late-night atmosphere.
+- Poetic emotional space.
+- Intimate AI music experience.
+- One continuous emotional scene, not separate boxes.
+- AI presence first; music controls second.
 
-## Motion Principles
+## Visual Universe
 
-- Official stack: GSAP and Framer Motion.
-- GSAP owns continuous ambient motion: waveform drift, particles, glow breathing, slow atmospheric loops.
-- Framer Motion owns React state transitions: entering, exiting, hover, tap, and state changes.
-- Motion should feel soft, weighted, and cinematic. Avoid springy, bouncy, gaming, EDM, or nightclub behavior.
-- Every motion should either express AI presence, emotional pacing, or tactile control feedback.
+The app lives in a fullscreen emotional environment:
 
-## Cinematic Pacing
+- near black, deep navy, dark purple
+- low-saturation cinematic color
+- soft blurred aurora lights
+- subtle grain and star texture
+- slow ambient motion
+- floating glass panels only where information needs a surface
 
-- AI thinking should unfold in short stages rather than instant replacement.
-- Speaking and music fade-in states should feel like sound entering the room.
-- Transitions should favor 400-900ms for UI changes and 4-10s for ambient loops.
-- Avoid abrupt scale, rotation, or color jumps.
+Avoid generic dashboards, top navigation bars, large playlists, ranking views, and stacked cards.
 
-## Chinese Typography Direction
+## Emotional Orb
 
-- Use a Chinese-friendly system stack: `PingFang SC`, `Microsoft YaHei`, `Noto Sans CJK SC`, system sans.
-- Use Songti/serif accents only for emotional hero-level text, track titles, or spoken copy.
-- Keep Chinese line height generous: 1.55-1.9 for prose.
-- Do not use negative letter spacing.
-- Avoid long paragraph blocks in the main stage.
+`EmotionParticleOrb` is the primary visual centerpiece. It replaces waveform/bar visualizer language with a breathing emotional energy field.
 
-## Spacing Philosophy
+State behavior:
 
-- The stage should breathe, but not feel like a marketing landing page.
-- Controls should stay close to the emotional center.
-- Mobile spacing should preserve one-handed input and stable tap targets.
-- Do not nest cards inside cards. Use panels only when framing repeated items or focused controls.
+- idle: soft breathing
+- thinking: particles gather inward
+- listening: orbit ring activates
+- speaking: soft pulse aura
+- fading: particles expand slowly
+- playing: gentle rhythmic movement
+- paused: low-energy floating
 
-## Glow Language
+Mood reactions:
 
-- Glow is emotional atmosphere, not decoration.
-- Use warm amber, muted rose, lunar blue-green, and soft violet in low saturation.
-- Hover glow expands softly; press glow tightens inward.
-- Avoid neon RGB, cyberpunk overload, hard outlines, and aggressive gradients.
+- calm: soft blue/cyan particles
+- happy: warmer gold and rose glow
+- sad: slower dim blue particles
+- romantic: rose/violet glow
+- lonely: sparse drifting particles
 
-## Ambient Motion
+Avoid nightclub visualizers, EDM bars, gaming RGB, cyberpunk overload, aggressive motion, or dense particle storms.
 
-- Background glows should move slowly and almost imperceptibly.
-- Particles should feel like dust in sound, not stars in a game scene.
-- Waveform bars should breathe and ripple, not bounce like a club visualizer.
-- Idle and paused states remain alive but quiet.
+## Motion Stack
 
-## Button Interaction
+- Three.js / React Three Fiber: emotional orb, particle universe, energy field.
+- Drei: lightweight R3F support only where useful.
+- Framer Motion: subtitle transitions, panel entrance, drawer motion, hover/tap states, mode switching.
+- CSS/SVG: orbit lines, small decorative rings, glass depth, reduced-motion fallback.
+- GSAP: optional only for complex sequencing; do not overuse.
 
-All buttons, chips, pills, and icon controls share one tactile language:
+Respect `prefers-reduced-motion`. Motion should become quieter, not broken.
 
-- Hover: subtle scale up, soft outer glow, slightly brighter border, smooth easing.
-- Press/tap: slight scale down, glow tightens, fast tactile response, soft recovery.
-- Disabled controls keep shape and spacing stable.
-- Familiar transport actions use lucide-react icons.
+## AI Subtitle
 
-## AI Input Interaction
+AI communication should look like cinematic subtitles, not chat bubbles.
 
-- The input is a minimal horizontal AI companion bar, not a form.
-- Single-line text entry only.
-- Dark glassmorphism surface with a soft breathing glow.
-- Right-side circular arrow submit button.
-- Focus should feel like Echo Soul is listening: border brightens, glow breathes, no loud CTA.
-- Mobile-first sizing: stable 40-44px submit target and no textarea behavior.
+- centered
+- poetic
+- warm
+- blur/fade entrance
+- short Chinese text
+- no assistant-style message boxes
 
-## Waveform Behavior
+Example tone:
 
-Required states:
+> 今晚的情绪很轻，说一句你的感觉，我替你找一首慢慢靠近的歌。
 
-- `idle`: quiet breathing, low particles, deep night stillness.
-- `understanding/searching/preparing`: AI thinking, slightly denser motion, soft signal gathering.
-- `voice-speaking/music-ducked`: warm pulses and articulate waveform response, like speech moving through air.
-- `fading-in`: wider glow and slow lift, music approaching.
-- `playing`: steady emotional rhythm, calm movement.
-- `paused`: dimmed but still present.
+## Glass Information Panels
 
-## AI Emotional Rhythm
+Use glass panels sparingly:
 
-- The AI should feel like it listens before it recommends.
-- Thinking transitions are part of the emotional experience, not loading decoration.
-- AI speaking should visually calm the space and draw attention to the spoken copy.
-- Music fade-in should make the recommendation feel applied gently, not triggered mechanically.
+- now playing
+- recommendation reason
+- text drawer
+- playlist drawer
 
-## Emotional Transitions
+Panels should be translucent, compact, softly glowing, and layered into the scene. Do not build a grid dashboard.
 
-- Idle to thinking: input glow and waveform density increase.
-- Thinking to speaking: stage glow warms, particles slow slightly, text appears with calm weight.
-- Speaking to fade-in: waveform widens and glow opens outward.
-- Playing to paused: motion softens and volume/status language quiets.
+## Controls
 
-## Future Daily AI Playlist
+Controls live in a compact cinematic dock:
 
-Daily AI Playlist is future scope only and must not be implemented in this phase.
+- Play / Pause
+- Next Song
+- Voice Chat
+- Text Chat
+- Save as Memory
 
-Design direction:
+Buttons are circular glass controls with subtle glow, tactile press feedback, and calm labels. Voice is important but not loud.
 
-- On the first app open each day, AI may eventually generate a recommended playlist for that day.
-- The playlist should learn from recent emotions, interaction content, liked/skipped songs, and playback history.
-- AI can explain why today's playlist was recommended.
-- The user can tell AI through conversation whether they like or dislike a song.
-- Echo Soul should gradually build a personal music preference profile.
-- Playlists may include Chinese and English songs.
-- Future implementation depends on OpenAI plus NetEase integration.
-- Until then, document the concept only. Do not add UI, data models, storage, or recommendation logic for it yet.
+## Voice + Text Conversation
+
+Voice conversation is future scope, but the UI prepares for it:
+
+- voice interaction feels central
+- text input is minimal
+- text drawer slides from bottom
+- placeholder voice state: `语音对话即将支持`
+- no real recording, permission request, transcription, or streaming yet
+
+## Playlist Drawer
+
+The playlist is hidden by default behind `今日歌单`.
+
+Future Daily AI Playlist direction:
+
+- AI learns emotional habits over time.
+- AI learns favorite song patterns.
+- AI generates daily playlists automatically.
+- Songs may be Chinese or English.
+- AI explains why today’s playlist was chosen.
+
+Do not fully implement Daily AI Playlist yet.
+
+## Mobile Quality
+
+- Mobile-first.
+- Fullscreen scene stays centered.
+- Text must fit.
+- Controls must remain tappable.
+- Particle count must stay controlled.
+- No heavy postprocessing.
+- WebGL fallback must be graceful.

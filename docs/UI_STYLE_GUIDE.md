@@ -1,79 +1,72 @@
 # UI Style Guide
 
-Echo Soul is a Chinese late-night emotional AI space. The UI should feel cinematic, intimate, and emotionally responsive. It must not read as a dashboard, Spotify clone, productivity tool, or generic SaaS interface.
-
-## Visual Direction
-
-- Deep dark atmosphere with soft amber, rose, violet, and lunar blue-green light.
-- The AI emotional stage is the center of the product.
-- Playback controls are present but quiet.
-- Avoid large catalog lists, ranking surfaces, analytics panels, and productivity card grids.
-- Keep the interface usable on mobile first, with denser desktop refinement only where it helps.
+Echo Soul should feel like a cinematic emotional AI music universe: intimate, late-night, poetic, and premium. It must not read as a dashboard, SaaS layout, Spotify clone, generic player, productivity app, or normal chatbot.
 
 ## Layout
 
-- First screen is the actual Echo Soul experience, not a landing page.
-- Put the emotional AI presence, waveform, current recommendation, controls, and input in one immersive flow.
-- Avoid nested cards.
-- Use full-width atmospheric sections and small focused panels.
-- Stable dimensions are required for buttons, waveform, transport controls, and input.
+- Fullscreen emotional scene.
+- No traditional top navigation.
+- Center the emotional orb and AI subtitle.
+- Keep music information in one compact floating glass card.
+- Keep controls in a small circular dock.
+- Hide secondary surfaces behind drawers or pills.
+
+## Background
+
+- Near black base.
+- Deep navy and dark purple depth.
+- Low-saturation aurora lights.
+- Subtle grain/noise texture.
+- Minimal star texture.
+- Slow ambient motion.
 
 ## Typography
 
 - UI language is Simplified Chinese.
-- Use system Chinese sans fonts for controls and interface text.
-- Use Songti/serif accents sparingly for emotional spoken copy and track titles.
-- Keep line-height generous for Chinese prose.
-- Do not use negative letter spacing or viewport-width font scaling.
+- Use Chinese-friendly system sans for controls.
+- Use serif/Songti-like styling only for cinematic AI subtitle and large emotional title.
+- Keep Chinese prose short and breathable.
+- No negative letter spacing.
 
-## Color And Glow
+## Emotional Orb
 
-- Primary background: deep warm night, not pure black.
-- Emotional glow: muted rose, amber, violet, and blue-green.
-- Glow should breathe softly and respond to state.
-- Do not use neon RGB, nightclub visualizers, cyberpunk overload, or decorative gradient blobs.
+The orb is the visual soul of the app.
+
+- Use Three.js / React Three Fiber.
+- Keep particles optimized for mobile.
+- Avoid postprocessing unless absolutely necessary.
+- Use WebGL fallback.
+- Mood colors are subtle: cyan, violet, rose, warm gold.
+- Avoid EDM, gaming RGB, cyberpunk overload, and aggressive motion.
 
 ## Motion
 
-- Official animation stack: GSAP and Framer Motion.
-- GSAP is used for continuous ambient motion.
-- Framer Motion is used for component transitions, state changes, hover, and tap.
-- Motion should be smooth, slow, and emotionally weighted.
-- Avoid aggressive bounce, rapid flashing, and EDM-style equalizer behavior.
+- Framer Motion for UI transitions, hover/tap, drawers, subtitle changes.
+- Three.js/R3F for particles, aura, orbit rings.
+- CSS/SVG for small rings and decorative motion.
+- GSAP only if a sequence cannot be expressed simply.
+- Respect `prefers-reduced-motion`.
 
-## Buttons
+## Controls
 
-All buttons, pills, chips, queue toggles, play/pause, next, and submit controls share one premium system:
+- Circular glass buttons.
+- Soft glow on hover.
+- Slight scale-down on press.
+- Calm icon labels.
+- Voice button may show a listening ring when active.
 
-- Hover: subtle scale up, soft glow, border brightening, smooth easing.
-- Press/tap: slight scale down, glow tightens, tactile response, soft recovery.
-- Disabled: preserve size, spacing, and readable contrast.
-- Use lucide-react icons for familiar transport and tool actions.
+## Conversation
 
-## AI Input
+- No chat bubbles.
+- AI speech appears as cinematic subtitle.
+- Text input lives in a bottom drawer.
+- Voice interaction is prepared but not implemented.
+- Placeholder: `语音对话即将支持`.
 
-- Minimal horizontal AI input bar.
-- Single-line input, no textarea presentation.
-- Dark glassmorphism surface with soft breathing glow.
-- Right-side circular arrow submit button.
-- Focus state should feel like the AI is listening.
-- No giant CTA button.
+## Playlist
 
-## Waveform
-
-The waveform represents emotional resonance and AI presence, not raw audio analysis yet.
-
-Required states:
-
-- idle
-- AI thinking
-- AI speaking
-- music fading in
-- playing
-- paused
-
-The waveform should feel like sound moving through air in a deep night room. Avoid nightclub, gaming RGB, cyberpunk, or EDM visualizer language.
-
-## Future Daily AI Playlist
-
-Daily AI Playlist is future scope only. It should be documented as a future emotional companion feature and not implemented yet.
+- Hidden by default.
+- Open upward from a `今日歌单` pill.
+- Floating glass panel.
+- Minimal song rows.
+- Future Daily AI Playlist remains documented only.

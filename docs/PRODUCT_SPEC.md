@@ -2,55 +2,62 @@
 
 ## Product Direction
 
-Echo Soul is a Chinese AI emotional companion that recommends music as part of an intimate late-night emotional experience. The user describes how they feel; Echo Soul listens, responds in natural Chinese, recommends a song, and lets the music enter gently.
+Echo Soul is a cinematic Chinese emotional AI music companion. It understands a user’s feeling, speaks softly through poetic Chinese subtitle copy, and communicates through music.
 
-It is not a dashboard, not a Spotify clone, not a productivity app, and not a generic chatbot.
+It is not:
+
+- dashboard UI
+- SaaS layout
+- generic music player
+- Spotify clone
+- productivity app
+- normal chatbot
 
 ## Core Experience
 
-1. User opens Echo Soul.
-2. The app presents an immersive emotional stage.
-3. User writes one short emotional message in a minimal AI input bar.
-4. Echo Soul enters AI thinking states.
-5. Echo Soul speaks in Chinese through a short companion-like intro.
-6. Music stays quiet under the AI voice.
-7. Music fades in softly after the AI finishes speaking.
-8. The user can pause, resume, or request the next recommendation.
+1. User opens a fullscreen emotional universe.
+2. The emotional orb breathes in a late-night atmosphere.
+3. User speaks through future voice UI or writes a short text message.
+4. Echo Soul enters thinking states.
+5. AI subtitle responds with a short emotional intro.
+6. The recommended song appears in a compact glass card.
+7. Music ducking and fade-in state are preserved through the mock mixer.
+8. User can play/pause, request next song, open text chat, trigger voice placeholder, save memory placeholder, or open the playlist drawer.
 
-## AI Tone
+## Current Scope
 
-- Simplified Chinese.
-- Warm, calm, restrained, slightly poetic.
-- Companion-like, not assistant-like.
-- No clinical diagnosis, no overpromising, no customer-service phrasing.
+- Cinematic fullscreen UI.
+- Lazy-loaded Three.js emotional particle orb.
+- Cinematic AI subtitle.
+- Now playing glass card.
+- Control dock.
+- Voice/text dock.
+- Playlist drawer.
+- Existing mock recommendation logic.
+- Existing mock playback state flow.
 
-## Current MVP Scope
+## Non-Goals
 
-- Mock emotional recommendation flow.
-- Mock songs with Chinese and English tracks.
-- Mock voice timing.
-- Mock audio ducking and fade-in states.
-- State-driven emotional waveform.
-- Premium button and input motion.
+- No real voice recording.
+- No microphone permission request.
+- No transcription.
+- No OpenAI or NetEase integration.
+- No real audio analysis.
+- No real Daily AI Playlist generation.
+- No backend, database, auth, or persistence.
 
-## Non-Goals For This Phase
+## Future Voice Conversation
 
-- Do not implement Daily AI Playlist.
-- Do not integrate OpenAI.
-- Do not integrate NetEase.
-- Do not add auth, backend, database, or persistent preference profile.
-- Do not add real audio analysis or Three.js.
+Future voice interaction should feel like talking to an emotional AI DJ. The current UI only prepares the interaction language with a calm voice button and listening placeholder.
 
 ## Future Daily AI Playlist
 
-Daily AI Playlist is a future feature only:
+Future concept:
 
-- 每天第一次打开 app 时，AI 会主动生成当天推荐歌单。
-- 歌单根据用户近期情绪、互动内容、喜欢/跳过记录、播放历史慢慢学习。
-- AI 可以解释今天为什么推荐这个歌单。
-- 用户可以通过对话告诉 AI 喜欢或不喜欢某首歌。
-- AI 会逐渐建立个人音乐偏好画像。
-- 歌单可以包含中文和英文歌曲。
-- 未来接入 OpenAI + NetEase 后实现。
+- AI learns recent emotional habits.
+- AI learns favorite song patterns.
+- AI generates daily playlists automatically.
+- Songs can be Chinese or English.
+- AI explains why it chose today’s playlist.
 
-This phase must only document the direction. Do not add UI, storage, data models, or recommendation logic for it yet.
+Current implementation only provides a drawer surface and explanatory copy.

@@ -1,22 +1,26 @@
-import { useMemo, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { lazy, Suspense, useMemo, useState } from 'react'
 import './App.css'
 import { MockAudioMixer } from './audio/MockAudioMixer'
-import { EmotionalWaveform } from './components/EmotionalWaveform'
-import { EmotionInput } from './components/EmotionInput'
-import { NowPlayingCard } from './components/NowPlayingCard'
-import { PlayerControls } from './components/PlayerControls'
-import { PlaylistQueue } from './components/PlaylistQueue'
-import { RecommendationCard } from './components/RecommendationCard'
-import { TimeWeatherCard } from './components/TimeWeatherCard'
-import { VoiceStatus } from './components/VoiceStatus'
-import { iconButtonMotion } from './components/motionPresets'
+import { VoiceTextDock } from './components/chat/VoiceTextDock'
+import { EmotionalUniverseShell } from './components/layout/EmotionalUniverseShell'
+import { AIMessageSubtitle } from './components/player/AIMessageSubtitle'
+import { ControlDock } from './components/player/ControlDock'
+import { NowPlayingGlassCard } from './components/player/NowPlayingGlassCard'
+import { PlaylistDrawer } from './components/player/PlaylistDrawer'
 import { mockAIProvider } from './providers/ai/mockAIProvider'
 import { mockMusicProvider } from './providers/music/MockMusicProvider'
 import { mockVoiceProvider } from './providers/voice/mockVoiceProvider'
 import type { DJRecommendation } from './types/ai'
 import type { PlaybackStatus } from './types/audio'
 import type { Song, UserMusicPreferences } from './types/music'
+
+const EmotionParticleOrb = lazy(() =>
+  import('./components/visual/EmotionParticleOrb').then((module) => ({
+    default: module.EmotionParticleOrb,
+  })),
+)
+
+const weatherLabel = '夜色微凉'
 
 function App() {
   const [emotionText, setEmotionText] = useState('今天有点累，但不想马上睡。')
@@ -27,6 +31,9 @@ function App() {
   const [error, setError] = useState<string>()
   const [nextOffset, setNextOffset] = useState(0)
   const [isBusy, setIsBusy] = useState(false)
+  const [isListening, setIsListening] = useState(false)
+  const [textDockOpen, setTextDockOpen] = useState(true)
+  const [memorySaved, setMemorySaved] = useState(false)
 
   const mixer = useMemo(
     () =>
@@ -54,10 +61,13 @@ function App() {
   async function startRecommendation(offset = 0): Promise<void> {
     if (!emotionText.trim()) {
       setError('先告诉我你现在的感觉。')
+      setTextDockOpen(true)
       return
     }
 
     setError(undefined)
+    setIsListening(false)
+    setMemorySaved(false)
     setIsBusy(true)
     setStatus('understanding')
 
@@ -73,7 +83,7 @@ function App() {
           text: emotionText,
           preferences,
           localTime: currentTime,
-          weather: '夜色微凉',
+          weather: weatherLabel,
         },
         orderedSongs,
       )
@@ -87,6 +97,7 @@ function App() {
     } catch {
       setError('我刚刚没能完整接住你的话。先给你放一首安静一点的。')
       setStatus('idle')
+      setTextDockOpen(true)
     } finally {
       setIsBusy(false)
     }
@@ -122,75 +133,75 @@ function App() {
     void startRecommendation(next)
   }
 
+  function handleVoicePlaceholder(): void {
+    setIsListening(true)
+    setTextDockOpen(false)
+    window.setTimeout(() => {
+      setIsListening(false)
+      setTextDockOpen(true)
+    }, 2200)
+  }
+
+  function handleSaveMemory(): void {
+    setMemorySaved(true)
+    window.setTimeout(() => setMemorySaved(false), 2400)
+  }
+
   return (
-    <main className="app-shell">
-      <div className="grain-layer" />
-      <motion.div
-        className="ambient-glow glow-one"
-        animate={{ opacity: [0.45, 0.78, 0.45], scale: [1, 1.08, 1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="ambient-glow glow-two"
-        animate={{ opacity: [0.36, 0.62, 0.36], y: [0, -18, 0] }}
-        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
-      <div className="experience-frame">
-        <header className="topbar">
-          <motion.button
-            className="ghost-menu"
-            type="button"
-            aria-label="打开情绪菜单"
-            variants={iconButtonMotion}
-            initial="rest"
-            animate="rest"
-            whileHover="hover"
-            whileTap="tap"
-          >
-            <span />
-            <span />
-            <span />
-          </motion.button>
-          <div className="brand-mark">
-            <span>Echo Soul</span>
-            <small>中文 AI 情绪陪伴</small>
-          </div>
-          <TimeWeatherCard time={currentTime} />
-        </header>
-
-        <motion.section
-          className="ai-stage"
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <VoiceStatus status={status} volume={musicVolume} />
-          <EmotionalWaveform status={status} />
-          <AnimatePresence mode="wait">
-            <RecommendationCard recommendation={recommendation} />
-          </AnimatePresence>
-          <NowPlayingCard song={recommendation?.song ?? null} />
-          <PlayerControls
-            status={status}
-            disabled={isBusy}
-            onTogglePlay={handleTogglePlay}
-            onNext={handleNextSong}
-          />
-        </motion.section>
-
-        <section className="conversation-dock">
-          <EmotionInput
-            value={emotionText}
-            error={error}
-            onChange={setEmotionText}
-            onSubmit={() => void startRecommendation()}
-          />
-        </section>
-
-        <PlaylistQueue songs={queue.length > 0 ? queue : []} />
+    <EmotionalUniverseShell status={status} volume={musicVolume} time={currentTime}>
+      <div className="universe-copy">
+        <span className="universe-kicker">AI emotional music presence</span>
+        <h1>Echo Soul</h1>
+        <p>把情绪交给夜色，让音乐替你轻轻回应。</p>
       </div>
-    </main>
+
+      <div className="orb-stage">
+        <Suspense fallback={<div className="orb-loading" aria-hidden="true" />}>
+          <EmotionParticleOrb
+            status={status}
+            mood={recommendation?.analysis.primaryEmotion}
+            listening={isListening}
+          />
+        </Suspense>
+      </div>
+
+      <AIMessageSubtitle
+        recommendation={recommendation}
+        status={status}
+        listening={isListening}
+      />
+
+      <NowPlayingGlassCard
+        recommendation={recommendation}
+        time={currentTime}
+        weather={weatherLabel}
+      />
+
+      <ControlDock
+        status={status}
+        disabled={isBusy}
+        listening={isListening}
+        textOpen={textDockOpen}
+        memorySaved={memorySaved}
+        onTogglePlay={handleTogglePlay}
+        onNext={handleNextSong}
+        onVoice={handleVoicePlaceholder}
+        onToggleText={() => setTextDockOpen((current) => !current)}
+        onSaveMemory={handleSaveMemory}
+      />
+
+      <VoiceTextDock
+        value={emotionText}
+        error={error}
+        open={textDockOpen}
+        listening={isListening}
+        onChange={setEmotionText}
+        onSubmit={() => void startRecommendation()}
+        onVoice={handleVoicePlaceholder}
+      />
+
+      <PlaylistDrawer songs={queue} />
+    </EmotionalUniverseShell>
   )
 }
 

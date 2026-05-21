@@ -5,79 +5,81 @@
 - React
 - TypeScript
 - Vite
-- Tailwind-compatible CSS
 - Framer Motion
-- GSAP
+- Three.js
+- @react-three/fiber
+- @react-three/drei
 - lucide-react
-- Mock AI, voice, and music providers for the current local experience
+- CSS glassmorphism and SVG details
+- Mock AI, voice, music, and audio mixer providers
 
-Future integrations may use OpenAI for reasoning/TTS and NetEase for music, but this phase does not add provider integrations.
+## Current Architecture
 
-## Animation Architecture
+The app preserves the existing mock recommendation flow:
 
-- Framer Motion handles React component transitions, hover/tap feedback, AI state changes, and enter/exit animations.
-- GSAP handles continuous ambient animation that should not be recreated on every React render.
-- Anime.js is inspiration only and is not an official dependency.
-- Three.js is intentionally not used in this phase.
+- `AIProvider` creates emotion analysis and recommendation.
+- `VoiceProvider` simulates AI voice duration.
+- `MusicProvider` provides mock songs.
+- `MockAudioMixer` simulates voice, ducking, fade-in, playing, pause, and resume states.
 
-## Current State Model
+## New UI Component Structure
 
-`PlaybackStatus` covers:
+- `src/components/layout/EmotionalUniverseShell.tsx`
+- `src/components/visual/EmotionParticleOrb.tsx`
+- `src/components/player/AIMessageSubtitle.tsx`
+- `src/components/player/NowPlayingGlassCard.tsx`
+- `src/components/player/ControlDock.tsx`
+- `src/components/player/PlaylistDrawer.tsx`
+- `src/components/chat/VoiceTextDock.tsx`
 
-- `idle`
-- `understanding`
-- `searching`
-- `preparing`
-- `voice-speaking`
-- `music-ducked`
-- `fading-in`
-- `playing`
-- `paused`
+The previous waveform/player components were removed from the active UI path. The main screen uses the new cinematic universe components.
 
-The UI maps these to emotional states:
+## Visual Runtime
 
-- idle / paused: quiet presence
-- understanding / searching / preparing: AI thinking
-- voice-speaking / music-ducked: AI speaking
-- fading-in: music approaching
-- playing: emotional rhythm
+`EmotionParticleOrb` is lazy-loaded to split Three/R3F out of the main app bundle.
 
-## Provider Architecture
+Performance rules:
 
-The app keeps provider boundaries so future integrations can replace mocks:
+- controlled particle count
+- instanced meshes
+- no heavy postprocessing
+- low-power WebGL preference
+- no camera controls
+- CSS fallback if WebGL fails
+- reduced-motion support
 
-- `AIProvider`: creates emotional analysis, spoken intro, and recommendation.
-- `VoiceProvider`: synthesizes or simulates AI voice.
-- `MusicProvider`: provides candidate tracks.
-- `AudioMixer`: coordinates voice, ducking, fade-in, pause, and resume behavior.
+## State Mapping
 
-## UI Components
+Existing `PlaybackStatus` maps into visual states:
 
-Current key components:
+- `idle`: idle
+- `understanding`, `searching`, `preparing`: thinking
+- voice placeholder active: listening
+- `voice-speaking`, `music-ducked`: speaking
+- `fading-in`: fading
+- `playing`: playing
+- `paused`: paused
 
-- `EmotionInput`
-- `EmotionalWaveform`
-- `VoiceStatus`
-- `RecommendationCard`
-- `NowPlayingCard`
-- `PlayerControls`
-- `PlaylistQueue`
-- `TimeWeatherCard`
+## Future Voice Architecture
 
-Shared button motion lives in `src/components/motionPresets.ts`.
+The UI prepares these future voice states:
 
-## Constraints
+- idle
+- listening
+- thinking
+- speaking
 
-- Do not implement Daily AI Playlist in this phase.
-- Do not add a backend, database, auth system, real OpenAI calls, or NetEase integration unless explicitly requested.
-- Do not fake real audio analysis. The waveform is state-driven ambient motion.
-- Do not add large dependencies without a clear reason.
+No real microphone access, recording, transcription, streaming, or voice API integration is implemented yet.
+
+## Future Daily AI Playlist
+
+Only the drawer and documentation prepare the concept. No daily generation, persistence, preference profile, OpenAI integration, or NetEase integration is implemented.
 
 ## Verification
 
-Before completion:
+Run:
 
-- `npm run lint`
-- `npm run build`
+- `npm.cmd run lint`
+- `npm.cmd run build`
 
-For meaningful UI changes, inspect in browser when practical.
+PowerShell may block `npm run ...` through `npm.ps1`, so `npm.cmd` is the reliable local command on this machine.

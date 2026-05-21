@@ -1,5 +1,86 @@
 # Development Log
 
+## 2026-05-21 Cinematic Emotional AI Music Universe
+
+### Implemented
+
+- Rebuilt the main screen into a fullscreen cinematic emotional universe.
+- Created new modular components:
+  - `src/components/layout/EmotionalUniverseShell.tsx`
+  - `src/components/visual/EmotionParticleOrb.tsx`
+  - `src/components/player/AIMessageSubtitle.tsx`
+  - `src/components/player/NowPlayingGlassCard.tsx`
+  - `src/components/player/ControlDock.tsx`
+  - `src/components/player/PlaylistDrawer.tsx`
+  - `src/components/chat/VoiceTextDock.tsx`
+- Replaced the visible waveform/player layout with a lazy-loaded Three.js emotional orb.
+- Added mood-aware orb color behavior for calm, happy, sad, romantic, and lonely tones.
+- Added cinematic AI subtitle presentation instead of chatbot bubbles.
+- Added compact now-playing glass card with emotional recommendation reason.
+- Added control dock for play/pause, next song, voice chat placeholder, text chat, and save-as-memory placeholder.
+- Added bottom text drawer and central voice placeholder state.
+- Added hidden playlist drawer behind `今日歌单`.
+- Preserved existing mock AI recommendation, queue, play/pause, next song, now playing, weather/time context, and mock audio state flow.
+- Rewrote corrupted visible mock song and mock AI copy into readable Simplified Chinese.
+- Removed the old active waveform/player component path from the main UI in favor of the new modular universe components.
+
+### Libraries Used
+
+- React
+- TypeScript
+- Vite
+- Framer Motion
+- Three.js
+- @react-three/fiber
+- @react-three/drei
+- lucide-react
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Build emits a Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+### Future Work
+
+- Real voice recording and transcription.
+- Real OpenAI reasoning/TTS integration.
+- NetEase music integration.
+- Real audio analysis.
+- Daily AI Playlist learning and generation.
+- Optional further bundle tuning for the Three/R3F chunk.
+
+## 2026-05-21 Step 8 Three.js Emotional Stage
+
+### Implemented
+
+- Added `src/components/EmotionalStage.tsx` using React Three Fiber and Three.js.
+- Kept `EmotionalWaveform.tsx` as a compatibility wrapper so existing app props remain unchanged.
+- Replaced the old waveform concept with a controlled emotional particle field:
+  - idle: slow breathing particles
+  - AI thinking: particles gently gather toward center
+  - AI speaking: aura pulses softly
+  - music fading in: particles expand outward
+  - playing: gentle rhythmic movement
+  - paused: low-energy floating
+- Added a CSS fallback for environments without WebGL.
+- Kept the Three.js scope limited to the central emotional visual stage.
+- Added a microphone placeholder button beside the AI input submit button.
+- Added placeholder state text: `语音输入即将支持`.
+- Did not implement real voice recording, permissions, transcription, or streaming.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Build emits a Vite chunk-size warning because Three/R3F increases the client bundle size.
+
+### Known Limitations
+
+- The particle field is still state-driven, not real audio-reactive analysis.
+- Voice input remains a placeholder only.
+- No postprocessing was added to keep mobile GPU load controlled.
+
 ## 2026-05-21 Echo Soul Motion Refinement
 
 ### Implemented
