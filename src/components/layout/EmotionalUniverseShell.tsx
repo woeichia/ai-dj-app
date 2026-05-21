@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import Aurora from '../background/Aurora'
 
 interface EmotionalUniverseShellProps {
   children: React.ReactNode
@@ -9,17 +10,15 @@ export function EmotionalUniverseShell({ children }: EmotionalUniverseShellProps
 
   return (
     <main className="universe-shell">
+      <div className="universe-aurora-layer" aria-hidden="true">
+        <Aurora
+          colorStops={['#7dd3fc', '#c084fc', '#f472b6']}
+          amplitude={reduceMotion ? 0.38 : 0.78}
+          blend={0.58}
+          speed={reduceMotion ? 0 : 0.38}
+        />
+      </div>
       <div className="universe-noise" />
-      <motion.div
-        className="universe-aurora aurora-rose"
-        animate={reduceMotion ? undefined : { opacity: [0.24, 0.4, 0.24], scale: [1, 1.06, 1] }}
-        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="universe-aurora aurora-cyan"
-        animate={reduceMotion ? undefined : { opacity: [0.16, 0.34, 0.16], y: [0, -14, 0] }}
-        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
-      />
       <div className="universe-stars" />
 
       <motion.section

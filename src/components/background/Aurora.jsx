@@ -110,7 +110,7 @@ void main() {
 `;
 
 export default function Aurora(props) {
-  const { colorStops = ['#5227FF', '#7cff67', '#5227FF'], amplitude = 1.0, blend = 0.5 } = props;
+  const { colorStops = ['#5227FF', '#7cff67', '#5227FF'], amplitude = 1.0, blend = 0.5, speed = 1.0 } = props;
   const propsRef = useRef(props);
   propsRef.current = props;
 
@@ -123,7 +123,8 @@ export default function Aurora(props) {
     const renderer = new Renderer({
       alpha: true,
       premultipliedAlpha: true,
-      antialias: true
+      antialias: false,
+      powerPreference: 'low-power'
     });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
@@ -171,7 +172,6 @@ export default function Aurora(props) {
 
     let animateId = 0;
     const update = t => {
-      animateId = requestAnimationFrame(update);
       const { time = t * 0.01, speed = 1.0 } = propsRef.current;
       program.uniforms.uTime.value = time * speed * 0.1;
       program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;
@@ -182,6 +182,9 @@ export default function Aurora(props) {
         return [c.r, c.g, c.b];
       });
       renderer.render({ scene: mesh });
+      if (speed !== 0) {
+        animateId = requestAnimationFrame(update);
+      }
     };
     animateId = requestAnimationFrame(update);
 
@@ -196,7 +199,7 @@ export default function Aurora(props) {
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amplitude]);
+  }, [amplitude, speed]);
 
   return <div ref={ctnDom} className="aurora-container" />;
 }
