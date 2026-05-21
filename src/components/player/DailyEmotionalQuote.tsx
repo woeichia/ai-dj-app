@@ -54,7 +54,8 @@ export function DailyEmotionalQuote() {
           clipPath: { duration: 1.35, ease: [0.22, 1, 0.36, 1] },
         }}
       >
-        {quote.text}
+        <span>{quote.text}</span>
+        <span aria-hidden="true">{quote.text}</span>
       </motion.span>
       {hasSource ? <small className={sourceVisible ? 'visible' : ''}>{quote.source}</small> : null}
     </motion.button>

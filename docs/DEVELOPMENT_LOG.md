@@ -1,5 +1,23 @@
 # Development Log
 
+## 2026-05-21 Aurora Gradient Ticker Refinement
+
+### Implemented
+
+- Added a subtle CSS aurora background layer with slow cinematic motion.
+- Kept the particle/orb canvas transparent and softened the orb vignette so particles float directly in the emotional scene.
+- Changed the daily quote treatment into a ReactBits-inspired star-border frame.
+- Changed the daily quote motion to an elegant right-to-left emotional ticker.
+- Applied an animated violet/cyan/rose gradient text treatment to the `Echo Soul` title.
+- Removed the static fallback AI speech subtitle so the overlay only shows current recommendation speech content.
+- Kept subtitle typing character-by-character with clean opacity and no blur effect.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
 ## 2026-05-21 Focused Quote Spacing Voice Refinement
 
 ### Implemented

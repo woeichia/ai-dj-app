@@ -20,10 +20,10 @@ export function AIMessageSubtitle({
   const reduceMotion = useReducedMotion()
   const speaking = speakingStatuses.includes(status)
   const dialogue = useMemo(() => getDialogue(recommendation), [recommendation])
-  const [heldDialogue, setHeldDialogue] = useState(speaking ? dialogue : null)
+  const [heldDialogue, setHeldDialogue] = useState(speaking && dialogue ? dialogue : null)
 
   useEffect(() => {
-    if (speaking) {
+    if (speaking && dialogue) {
       const timer = window.setTimeout(() => setHeldDialogue(dialogue), 0)
       return () => window.clearTimeout(timer)
     }
@@ -144,7 +144,7 @@ function ProgressiveSubtitle({
 function getDialogue(recommendation: DJRecommendation | null): {
   title: string
   detail?: string
-} {
+} | null {
   if (recommendation) {
     return {
       title: recommendation.spokenIntro,
@@ -152,7 +152,5 @@ function getDialogue(recommendation: DJRecommendation | null): {
     }
   }
 
-  return {
-    title: '先给你放一首安静一点的歌。',
-  }
+  return null
 }

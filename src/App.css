@@ -10,6 +10,23 @@
     linear-gradient(145deg, #04050b 0%, #090814 44%, #140d1e 72%, #05050a 100%);
 }
 
+.universe-shell::before {
+  content: "";
+  position: fixed;
+  inset: -18vh -18vw;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.36;
+  background:
+    linear-gradient(115deg, transparent 0 18%, rgba(116, 222, 232, 0.1) 25%, transparent 42%),
+    linear-gradient(68deg, transparent 0 22%, rgba(222, 139, 205, 0.12) 34%, transparent 54%),
+    linear-gradient(142deg, transparent 0 28%, rgba(172, 128, 255, 0.11) 46%, transparent 66%);
+  filter: blur(24px);
+  transform: rotate(-6deg) scale(1.08);
+  animation: aurora-flow 22s ease-in-out infinite;
+  mask-image: radial-gradient(ellipse at 50% 44%, black 0%, rgba(0, 0, 0, 0.84) 48%, transparent 82%);
+}
+
 .universe-noise,
 .universe-stars {
   position: fixed;
@@ -100,23 +117,38 @@
   font-weight: 620;
   line-height: 0.92;
   letter-spacing: 0;
+  color: transparent;
+  background: linear-gradient(100deg, #f8e8ff 0%, #9eeaf0 28%, #c6a2ff 48%, #f1a6cf 68%, #f8e8ff 100%);
+  background-size: 240% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
   text-shadow:
     0 0 34px rgba(202, 169, 255, 0.34),
     0 0 80px rgba(108, 225, 236, 0.12);
+  animation: title-gradient-shine 9s ease-in-out infinite;
 }
 
 .daily-quote {
   position: relative;
   overflow: hidden;
   display: grid;
-  justify-items: center;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
   gap: 5px;
   margin: 0;
-  padding: 4px 14px 6px;
-  border: 0;
+  width: min(440px, calc(100vw - 44px));
+  min-height: 42px;
+  padding: 5px 13px;
+  border: 1px solid rgba(229, 216, 255, 0.2);
+  border-radius: 999px;
   color: rgba(239, 231, 255, 0.62);
-  background: transparent;
+  background:
+    linear-gradient(rgba(8, 10, 24, 0.72), rgba(8, 10, 24, 0.72)) padding-box,
+    linear-gradient(110deg, rgba(154, 228, 238, 0.38), rgba(222, 158, 210, 0.22), rgba(185, 151, 255, 0.4)) border-box;
   font-size: clamp(14px, 2.1vw, 17px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 24px rgba(172, 142, 255, 0.08);
   cursor: default;
 }
 
@@ -131,23 +163,55 @@
   pointer-events: none;
 }
 
+.daily-quote::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  opacity: 0.72;
+  background:
+    radial-gradient(circle at 8% 50%, rgba(159, 232, 238, 0.52) 0 1px, transparent 2px),
+    radial-gradient(circle at 92% 50%, rgba(234, 168, 211, 0.48) 0 1px, transparent 2px),
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  mask-image: linear-gradient(90deg, black, transparent 18%, transparent 82%, black);
+  animation: star-border-breathe 4.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
 .daily-quote.has-source {
   cursor: pointer;
 }
 
 .daily-quote em {
+  position: relative;
+  z-index: 1;
   color: rgba(187, 222, 229, 0.44);
   font-size: 10px;
   font-style: normal;
   font-weight: 700;
   letter-spacing: 0.16em;
+  white-space: nowrap;
 }
 
 .daily-quote-text {
-  display: inline-block;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
   transition:
     color 0.36s ease,
     transform 0.36s ease;
+}
+
+.daily-quote-text > span {
+  display: inline-block;
+  flex: 0 0 100%;
+  padding-inline: 18px;
+  animation: quote-ticker 15s linear infinite;
 }
 
 .daily-quote:hover .daily-quote-text,
@@ -159,6 +223,8 @@
 }
 
 .daily-quote small {
+  grid-column: 1 / -1;
+  justify-self: center;
   opacity: 0;
   transform: translateY(-3px);
   color: rgba(225, 216, 255, 0.46);
@@ -210,15 +276,14 @@
   display: block;
   width: 100%;
   height: 100%;
+  background: transparent !important;
 }
 
 .emotion-orb-vignette {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(circle at 50% 50%, transparent 0%, transparent 44%, rgba(4, 5, 14, 0.42) 74%, rgba(4, 5, 14, 0.88) 100%),
-    linear-gradient(180deg, rgba(4, 5, 14, 0.02), rgba(4, 5, 14, 0.38));
+  background: radial-gradient(circle at 50% 50%, transparent 0%, transparent 58%, rgba(4, 5, 14, 0.22) 86%, transparent 100%);
 }
 
 .emotion-orbit-lines {
@@ -729,6 +794,30 @@
   }
 }
 
+@keyframes aurora-flow {
+  0%,
+  100% {
+    opacity: 0.24;
+    transform: rotate(-8deg) translate3d(-2%, 1%, 0) scale(1.04);
+  }
+
+  50% {
+    opacity: 0.42;
+    transform: rotate(-3deg) translate3d(2%, -2%, 0) scale(1.12);
+  }
+}
+
+@keyframes title-gradient-shine {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 @keyframes orbit-drift {
   to {
     transform: rotate(360deg);
@@ -782,6 +871,27 @@
   42%,
   100% {
     transform: translateX(120%);
+  }
+}
+
+@keyframes star-border-breathe {
+  0%,
+  100% {
+    opacity: 0.42;
+  }
+
+  50% {
+    opacity: 0.86;
+  }
+}
+
+@keyframes quote-ticker {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
   }
 }
 
