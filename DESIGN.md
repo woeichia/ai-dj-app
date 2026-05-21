@@ -128,3 +128,36 @@ Do not fully implement Daily AI Playlist yet.
 - Particle count must stay controlled.
 - No heavy postprocessing.
 - WebGL fallback must be graceful.
+
+## Interaction Refinement: Cinematic Presence
+
+- AI voice ducking is invisible: music lowers while Echo Soul speaks and returns afterward without volume percentages, sound level labels, or audio status text.
+- AI speech appears as a temporary cinematic dialogue card. It may briefly explain song choice, emotional atmosphere, pacing, and intention, then fades away when the voice moment ends.
+- The persistent music panel is a lyrics display, not a recommendation explanation panel. It prioritizes one current lyric line and a quieter next line with slow fade, blur, and upward motion.
+- Text input is hidden by default and opens only from the Text Chat control. Voice remains the primary-feeling interaction.
+- Control labels stay hidden until hover or keyboard focus. Button motion should feel tactile, slow, and premium rather than fast or game-like.
+- Playlist glass can be more opaque than the stage glass so lyrics and song rows remain readable over the orb.
+
+## Overlay Subtitle Refinement
+
+- AI dialogue should render as a top-layer cinematic overlay between the orb and lyrics, above the underlying UI.
+- The overlay must not push, resize, or rearrange the existing layout.
+- Underlying UI remains visible through premium glass and ambient darkness.
+- Subtitle text reveals character by character with calm pacing and no text blur.
+- Avoid hard cursor, hacker typing, rapid machine typing, or aggressive motion.
+- After text submit, the input closes as if the message is being absorbed inward: horizontal compression, glow tightening, opacity fade, and soft blur.
+
+## Daily Emotional Quote
+
+- The line under `Echo Soul` is a daily emotional sentence, not fixed night copy.
+- Quotes are selected from mock data for now and should be structured for future AI-generated daily text.
+- The quote may be original AI copy or a famous quote with optional source metadata.
+- It should animate subtly: soft fade-in, gentle floating, restrained glow breathing.
+- Hover can lift and brighten the quote; hover or click can reveal source metadata when present.
+- Avoid cheesy motivational styling, banners, or noisy shimmer.
+
+## Voice Listening Placeholder
+
+- Pressing Voice Chat shows a temporary listening overlay with a breathing circular aura and soft ripple waves.
+- This is only a UI placeholder; no microphone, speech API, transcription, or recording is implemented.
+- The listening overlay should collapse or fade away when mock listening ends.

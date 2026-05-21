@@ -1,5 +1,84 @@
 # Development Log
 
+## 2026-05-21 Focused Quote Spacing Voice Refinement
+
+### Implemented
+
+- Added a subtle `今日回响` label to the daily emotional quote.
+- Made daily quote motion more noticeable while keeping it restrained: slow reveal, shimmer pass, breathing glow, and hover lift.
+- Preserved quote hover/click source reveal behavior for sourced quotes.
+- Added moderate spacing back between the particle orb and lyrics panel so the stage feels connected without crowding.
+- Replaced the circular voice listening overlay with a horizontal floating glass capsule.
+- Added a soft waveform strip and breathing capsule glow for the Voice Chat placeholder state.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-21 Daily Quote And Listening Overlay Refinement
+
+### Implemented
+
+- Replaced the fixed night-themed support phrase with a daily emotional quote component.
+- Added mock daily quote data with optional source/author metadata for future AI-generated daily quotes.
+- Added subtle quote animation: soft entrance, gentle glow breathing, and restrained hover lift.
+- Added quote hover/click source interaction when source metadata exists.
+- Tightened particle orb and lyrics spacing so they read as one emotional stage.
+- Repositioned the AI dialogue overlay between the particle area and lyrics area while keeping it on the top visual layer.
+- Improved AI dialogue readability with stronger glass opacity, contrast, shadow, and glow.
+- Restricted AI dialogue to speaking/fade moments so recommendation text does not stay frozen as a permanent subtitle.
+- Changed subtitle reveal to character-by-character typing with no text blur.
+- Added a temporary voice listening ripple/aura placeholder when Voice Chat is pressed.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-21 Overlay Subtitle And Input Absorption
+
+### Implemented
+
+- Refined AI dialogue into a fixed cinematic overlay layer above the existing orb, lyrics, controls, and drawers.
+- Preserved the existing layout structure with a spacer so dialogue visibility does not push or resize the scene.
+- Added progressive typewriter-style subtitle reveal with calm timing, subtle blur recovery, and a soft cursor.
+- Kept the AI dialogue temporary; it disappears after speaking/fade states complete.
+- Changed text submission so the input closes immediately after valid submit.
+- Refined the input exit motion into an inward emotional collapse with horizontal compression, glow tightening, opacity fade, and blur.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-21 Cinematic Interaction Refinement
+
+### Implemented
+
+- Removed visible volume/status presentation from the app shell while preserving mock audio ducking and fade-in behavior.
+- Changed AI communication into a temporary cinematic dialogue card that appears during listening/thinking/speaking/fade moments and fades away for immersive playback.
+- Converted the previous now-playing/reason glass card into a lyrics-focused panel with current and next lyric lines.
+- Removed the permanent recommendation explanation paragraph from the main music panel.
+- Hid the text input by default; it now opens only from the Text Chat control.
+- Removed the extra visible voice placeholder wording from the bottom input area.
+- Refined control button motion with stronger hover scale, slower easing, tighter tap feedback, and hover/focus-only labels.
+- Improved playlist drawer readability with higher glass opacity, stronger contrast, and slower blur/floating motion.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+### Future Work
+
+- Replace mock lyric timing with real playback-synced lyrics when a real music provider is integrated.
+- Implement real voice recording/transcription after the UI architecture is ready.
+
 ## 2026-05-21 Cinematic Emotional AI Music Universe
 
 ### Implemented

@@ -37,18 +37,18 @@ export const iconButtonMotion: Variants = {
     transition: { duration: 0.34, ease: emotionalEase },
   },
   hover: {
-    scale: 1.055,
+    scale: 1.085,
     borderColor: 'rgba(236, 222, 255, 0.42)',
     boxShadow:
-      'inset 0 1px 0 rgba(255,255,255,0.11), 0 0 28px rgba(190,164,255,0.24), 0 0 48px rgba(109,218,228,0.09)',
-    transition: { duration: 0.24, ease: emotionalEase },
+      'inset 0 1px 0 rgba(255,255,255,0.12), 0 0 34px rgba(190,164,255,0.28), 0 0 58px rgba(109,218,228,0.11)',
+    transition: { duration: 0.34, ease: emotionalEase },
   },
   tap: {
-    scale: 0.93,
+    scale: 0.91,
     borderColor: 'rgba(236, 222, 255, 0.3)',
     boxShadow:
       'inset 0 2px 12px rgba(12,8,24,0.4), 0 0 12px rgba(190,164,255,0.16)',
-    transition: { duration: 0.1, ease: emotionalEase },
+    transition: { duration: 0.14, ease: emotionalEase },
   },
 }
 
@@ -61,11 +61,11 @@ export const pillMotion: Variants = {
     transition: { duration: 0.34, ease: emotionalEase },
   },
   hover: {
-    scale: 1.02,
+    scale: 1.035,
     borderColor: 'rgba(226, 209, 255, 0.34)',
     boxShadow:
-      'inset 0 1px 0 rgba(255,255,255,0.1), 0 0 22px rgba(190,164,255,0.15)',
-    transition: { duration: 0.24, ease: emotionalEase },
+      'inset 0 1px 0 rgba(255,255,255,0.1), 0 0 28px rgba(190,164,255,0.18)',
+    transition: { duration: 0.34, ease: emotionalEase },
   },
   tap: {
     scale: 0.968,

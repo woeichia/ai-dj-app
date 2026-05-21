@@ -1,41 +1,41 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowUp, Mic } from 'lucide-react'
-import { iconButtonMotion, inputBarMotion } from '../motionPresets'
+import { ArrowUp } from 'lucide-react'
+import { iconButtonMotion } from '../motionPresets'
 
 interface VoiceTextDockProps {
   value: string
   error?: string
   open: boolean
-  listening: boolean
   onChange(value: string): void
   onSubmit(): void
-  onVoice(): void
 }
 
 export function VoiceTextDock({
   value,
   error,
   open,
-  listening,
   onChange,
   onSubmit,
-  onVoice,
 }: VoiceTextDockProps) {
   return (
     <section className="voice-text-dock">
-      <button className={`voice-presence${listening ? ' listening' : ''}`} type="button" onClick={onVoice}>
-        <Mic size={18} aria-hidden="true" />
-        <span>{listening ? '正在聆听' : '语音对话即将支持'}</span>
-      </button>
       <AnimatePresence>
         {open ? (
           <motion.form
             className="text-drawer"
-            variants={inputBarMotion}
-            initial={{ opacity: 0, y: 26, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.98 }}
-            transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: 30, scale: 0.97, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            exit={{
+              opacity: 0,
+              y: -10,
+              scaleX: 0.34,
+              scaleY: 0.82,
+              filter: 'blur(14px)',
+              boxShadow:
+                'inset 0 1px 0 rgba(255,255,255,0.1), 0 0 52px rgba(190,164,255,0.18)',
+            }}
+            transition={{ duration: 0.58, ease: [0.16, 1, 0.3, 1] }}
+            style={{ transformOrigin: 'center center' }}
             onSubmit={(event) => {
               event.preventDefault()
               onSubmit()

@@ -31,10 +31,10 @@ export function PlaylistDrawer({ songs }: PlaylistDrawerProps) {
         {open ? (
           <motion.div
             className="playlist-drawer"
-            initial={{ opacity: 0, y: 28, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.98 }}
-            transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: 34, scale: 0.965, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: 28, scale: 0.98, filter: 'blur(8px)' }}
+            transition={{ duration: 0.58, ease: [0.16, 1, 0.3, 1] }}
           >
             <div>
               <span className="panel-kicker">未来 Daily AI Playlist</span>

@@ -5,6 +5,7 @@ import { VoiceTextDock } from './components/chat/VoiceTextDock'
 import { EmotionalUniverseShell } from './components/layout/EmotionalUniverseShell'
 import { AIMessageSubtitle } from './components/player/AIMessageSubtitle'
 import { ControlDock } from './components/player/ControlDock'
+import { DailyEmotionalQuote } from './components/player/DailyEmotionalQuote'
 import { NowPlayingGlassCard } from './components/player/NowPlayingGlassCard'
 import { PlaylistDrawer } from './components/player/PlaylistDrawer'
 import { mockAIProvider } from './providers/ai/mockAIProvider'
@@ -27,19 +28,18 @@ function App() {
   const [recommendation, setRecommendation] = useState<DJRecommendation | null>(null)
   const [queue, setQueue] = useState<Song[]>([])
   const [status, setStatus] = useState<PlaybackStatus>('idle')
-  const [musicVolume, setMusicVolume] = useState(0)
   const [error, setError] = useState<string>()
   const [nextOffset, setNextOffset] = useState(0)
   const [isBusy, setIsBusy] = useState(false)
   const [isListening, setIsListening] = useState(false)
-  const [textDockOpen, setTextDockOpen] = useState(true)
+  const [textDockOpen, setTextDockOpen] = useState(false)
   const [memorySaved, setMemorySaved] = useState(false)
 
   const mixer = useMemo(
     () =>
       new MockAudioMixer({
         onStatusChange: setStatus,
-        onVolumeChange: setMusicVolume,
+        onVolumeChange: () => undefined,
       }),
     [],
   )
@@ -133,12 +133,19 @@ function App() {
     void startRecommendation(next)
   }
 
+  function handleTextSubmit(): void {
+    if (emotionText.trim()) {
+      setTextDockOpen(false)
+    }
+
+    void startRecommendation()
+  }
+
   function handleVoicePlaceholder(): void {
     setIsListening(true)
     setTextDockOpen(false)
     window.setTimeout(() => {
       setIsListening(false)
-      setTextDockOpen(true)
     }, 2200)
   }
 
@@ -148,11 +155,10 @@ function App() {
   }
 
   return (
-    <EmotionalUniverseShell status={status} volume={musicVolume} time={currentTime}>
+    <EmotionalUniverseShell>
       <div className="universe-copy">
-        <span className="universe-kicker">AI emotional music presence</span>
         <h1>Echo Soul</h1>
-        <p>把情绪交给夜色，让音乐替你轻轻回应。</p>
+        <DailyEmotionalQuote />
       </div>
 
       <div className="orb-stage">
@@ -171,11 +177,7 @@ function App() {
         listening={isListening}
       />
 
-      <NowPlayingGlassCard
-        recommendation={recommendation}
-        time={currentTime}
-        weather={weatherLabel}
-      />
+      <NowPlayingGlassCard recommendation={recommendation} status={status} />
 
       <ControlDock
         status={status}
@@ -194,10 +196,8 @@ function App() {
         value={emotionText}
         error={error}
         open={textDockOpen}
-        listening={isListening}
         onChange={setEmotionText}
-        onSubmit={() => void startRecommendation()}
-        onVoice={handleVoicePlaceholder}
+        onSubmit={handleTextSubmit}
       />
 
       <PlaylistDrawer songs={queue} />

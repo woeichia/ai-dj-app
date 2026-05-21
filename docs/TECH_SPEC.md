@@ -60,6 +60,41 @@ Existing `PlaybackStatus` maps into visual states:
 - `playing`: playing
 - `paused`: paused
 
+UI treatment for these states is intentionally quiet:
+
+- `MockAudioMixer` still emits volume changes for ducking and fade-in simulation.
+- `App` does not display volume, ducking percentages, or audio status labels.
+- AI dialogue is visible only during listening, thinking, speaking, ducked, and fade-in moments.
+- Once playback settles into `playing` or `paused`, the temporary AI dialogue leaves and the lyrics panel becomes the primary surface.
+
+## Lyrics Panel
+
+`NowPlayingGlassCard` now behaves as a cinematic lyrics display rather than a permanent recommendation reason card.
+
+- mock lyric lines are selected from the recommended song
+- current lyric line is prominent
+- next lyric line is quieter
+- lines transition with Framer Motion fade, blur, and vertical movement
+- recommendation reasoning stays in the temporary AI dialogue card
+
+## Daily Quote
+
+`DailyEmotionalQuote` selects one mock emotional quote per calendar day. The data shape supports:
+
+- quote text
+- original AI copy vs sourced quote
+- optional source/author metadata
+
+Future AI generation can replace the local quote selection without changing the visual position.
+
+## Overlay And Voice Placeholder
+
+- `AIMessageSubtitle` renders the AI speaking subtitle as a fixed overlay between the orb and lyrics.
+- The overlay does not push or resize the layout.
+- Subtitle reveal is character-by-character with no text blur.
+- Voice Chat uses the same overlay layer for a temporary listening ripple placeholder.
+- No real recording, permission prompt, transcription, or speech provider is implemented.
+
 ## Future Voice Architecture
 
 The UI prepares these future voice states:
