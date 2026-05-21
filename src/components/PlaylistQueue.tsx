@@ -17,7 +17,7 @@ export function PlaylistQueue({ songs }: PlaylistQueueProps) {
         whileHover="hover"
         whileTap="tap"
       >
-        <span>Playlist queue</span>
+        <span>候选歌单</span>
         <ChevronDown size={16} aria-hidden="true" />
       </motion.summary>
       <div className="queue-list">

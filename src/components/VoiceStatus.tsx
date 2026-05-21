@@ -12,7 +12,7 @@ const statusText: Record<PlaybackStatus, string> = {
   understanding: '正在理解你的情绪',
   searching: '正在寻找适合这份心情的声音',
   preparing: '正在准备给你的开场白',
-  'voice-speaking': 'AI DJ 正在说话',
+  'voice-speaking': 'Echo Soul 正在说话',
   'music-ducked': '音乐保持低音量',
   'fading-in': '音乐正在慢慢靠近',
   playing: '正在播放',
@@ -20,12 +20,14 @@ const statusText: Record<PlaybackStatus, string> = {
 }
 
 export function VoiceStatus({ status, volume }: VoiceStatusProps) {
+  const isQuiet = status === 'idle' || status === 'paused'
+
   return (
     <section className="voice-status" aria-live="polite">
       <motion.div
         className="status-orb"
         animate={{
-          scale: status === 'idle' || status === 'paused' ? 1 : [1, 1.08, 1],
+          scale: isQuiet ? 1 : [1, 1.08, 1],
           opacity: status === 'idle' ? 0.52 : 1,
         }}
         transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
@@ -38,7 +40,7 @@ export function VoiceStatus({ status, volume }: VoiceStatusProps) {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
           <strong>{statusText[status]}</strong>
           <span>音乐音量 {Math.round(volume * 100)}%</span>

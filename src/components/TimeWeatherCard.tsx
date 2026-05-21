@@ -10,7 +10,7 @@ export function TimeWeatherCard({ time }: TimeWeatherCardProps) {
       <CloudMoon size={18} aria-hidden="true" />
       <div>
         <strong>{time}</strong>
-        <span>天气 placeholder · 夜色微凉</span>
+        <span>夜色微凉</span>
       </div>
     </section>
   )

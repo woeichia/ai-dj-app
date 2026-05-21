@@ -1,5 +1,38 @@
 # Development Log
 
+## 2026-05-21 Echo Soul Motion Refinement
+
+### Implemented
+
+- Created root `DESIGN.md` as the Echo Soul design bible.
+- Reframed docs around a Chinese AI emotional companion, immersive emotional AI space, cinematic deep-night atmosphere, and emotional resonance.
+- Documented Daily AI Playlist as future scope only. No UI, state, provider logic, persistence, or playlist implementation was added.
+- Refined shared button motion in `src/components/motionPresets.ts`:
+  - subtle hover scale
+  - soft glow expansion
+  - border brightening
+  - press scale-down
+  - tighter tactile glow
+- Converted the AI input into a minimal horizontal glass input bar with a right-side circular arrow submit button and breathing focus glow.
+- Updated visible UI copy to natural Chinese where this phase touched the app.
+- Refined `EmotionalWaveform.tsx` using GSAP plus Framer Motion:
+  - GSAP controls continuous ambient particles, ribbon drift, and air glow.
+  - Framer Motion controls React state-driven stage glow and waveform bar response.
+  - States remain mapped to idle, AI thinking, AI speaking, music fading in, playing, and paused.
+- Preserved the current mock recommendation, voice timing, and fade-in flow.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- `npm run lint` and `npm run build` through PowerShell were blocked by the local `npm.ps1` execution policy, so checks were run through `npm.cmd`.
+
+### Known Limitations
+
+- Waveform remains state-driven ambient motion, not real audio analysis.
+- Daily AI Playlist is documented only.
+- OpenAI and NetEase integrations remain future scope.
+
 ## 2026-05-19
 
 ### Project Rules

@@ -206,6 +206,19 @@
     inset 0 -60px 120px rgba(10, 9, 28, 0.72);
 }
 
+.air-glow {
+  position: absolute;
+  inset: 16% 12%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 42% 46%, rgba(255, 221, 201, 0.22), transparent 26%),
+    radial-gradient(circle at 58% 52%, rgba(123, 220, 230, 0.18), transparent 34%),
+    radial-gradient(circle at 48% 44%, rgba(204, 162, 255, 0.2), transparent 42%);
+  filter: blur(28px);
+  opacity: 0.22;
+  transform-origin: center;
+}
+
 .star-field {
   position: absolute;
   inset: 0;
@@ -379,6 +392,12 @@
   backdrop-filter: blur(16px);
 }
 
+.round-control:disabled,
+.next-song:disabled,
+.ai-submit:disabled {
+  opacity: 0.5;
+}
+
 .round-control {
   display: grid;
   width: 46px;
@@ -419,6 +438,8 @@
 }
 
 .ai-input-bar {
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 42px;
   align-items: center;
@@ -441,6 +462,20 @@
     background 0.28s ease;
 }
 
+.ai-input-bar::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 84% 50%, rgba(151, 230, 236, 0.18), transparent 24%),
+    radial-gradient(circle at 18% 50%, rgba(225, 168, 255, 0.12), transparent 30%);
+  opacity: 0.46;
+  filter: blur(14px);
+  animation: input-breath 5.6s ease-in-out infinite;
+}
+
 .ai-input-bar:hover {
   border-color: rgba(225, 207, 255, 0.22);
   box-shadow:
@@ -456,6 +491,11 @@
     inset 0 -18px 42px rgba(0, 0, 0, 0.12),
     0 0 0 4px rgba(192, 166, 255, 0.08),
     0 0 40px rgba(147, 217, 229, 0.13);
+}
+
+.ai-input-bar:focus-within::before {
+  opacity: 0.72;
+  animation-duration: 3.8s;
 }
 
 .ai-input-bar input {
@@ -484,6 +524,19 @@
   background: linear-gradient(135deg, #efd6ff, #9fe8ee, #efd6ff);
   background-size: 190% 190%;
   box-shadow: 0 0 24px rgba(177, 159, 255, 0.18);
+}
+
+@keyframes input-breath {
+  0%,
+  100% {
+    opacity: 0.34;
+    transform: scale(0.985);
+  }
+
+  50% {
+    opacity: 0.62;
+    transform: scale(1.012);
+  }
 }
 
 .playlist-queue {

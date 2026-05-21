@@ -1,155 +1,79 @@
 # UI Style Guide
 
+Echo Soul is a Chinese late-night emotional AI space. The UI should feel cinematic, intimate, and emotionally responsive. It must not read as a dashboard, Spotify clone, productivity tool, or generic SaaS interface.
+
 ## Visual Direction
 
-这个 App 的视觉方向是温暖、高级、cinematic、极简、mobile-first。它应该像一个私人的深夜音乐房间，而不是普通播放器模板或 Spotify clone。
+- Deep dark atmosphere with soft amber, rose, violet, and lunar blue-green light.
+- The AI emotional stage is the center of the product.
+- Playback controls are present but quiet.
+- Avoid large catalog lists, ranking surfaces, analytics panels, and productivity card grids.
+- Keep the interface usable on mobile first, with denser desktop refinement only where it helps.
 
-关键词：
+## Layout
 
-- 暖
-- 安静
-- 克制
-- 有光感
-- 中文友好
-- 电影感
-- 情绪陪伴
-
-## Layout Principles
-
-- Mobile-first。
-- 首屏就是核心体验，不做营销 landing page。
-- 用户打开后应立刻看到情绪输入和当前推荐状态。
-- 信息层级应清楚：情绪输入、AI DJ 回应、推荐歌曲、播放状态。
-- 不要把所有内容都做成卡片。
-- 不要卡片套卡片。
-- 保持足够留白，但不要空到像宣传页。
+- First screen is the actual Echo Soul experience, not a landing page.
+- Put the emotional AI presence, waveform, current recommendation, controls, and input in one immersive flow.
+- Avoid nested cards.
+- Use full-width atmospheric sections and small focused panels.
+- Stable dimensions are required for buttons, waveform, transport controls, and input.
 
 ## Typography
 
-中文排版优先：
+- UI language is Simplified Chinese.
+- Use system Chinese sans fonts for controls and interface text.
+- Use Songti/serif accents sparingly for emotional spoken copy and track titles.
+- Keep line-height generous for Chinese prose.
+- Do not use negative letter spacing or viewport-width font scaling.
 
-- 使用系统中文字体栈。
-- 行高要舒适，尤其是 AI DJ 文案。
-- 中文段落不要过长。
-- 控件文字避免挤压。
-- 不使用负 letter-spacing。
-- 不用 viewport width 控制字体大小。
+## Color And Glow
 
-建议风格：
-
-- 标题短而克制。
-- 正文像中文电台文案，温柔但清楚。
-- 按钮文案直接，例如“开始推荐”“再来一首”“播放”。
-
-## Color Direction
-
-避免单一紫色、单一深蓝、普通黑金、普通 Spotify 绿黑。
-
-建议使用：
-
-- 深暖背景：接近夜色但不过冷。
-- 柔和暖光点缀：琥珀、雾粉、低饱和红棕。
-- 少量冷色用于音频状态：低饱和蓝绿或月光色。
-- 高对比文字确保可读。
-
-不要使用：
-
-- 大面积霓虹渐变。
-- 装饰性渐变球。
-- bokeh 背景。
-- 过多玻璃拟态。
-- 纯营销感 hero gradient。
-
-## Components
-
-核心组件应包括：
-
-- 情绪输入区
-- 偏好选择区
-- AI DJ 旁白区
-- 推荐歌曲区
-- 播放控制区
-- 音量 / ducking / fade 状态提示
-
-控件建议：
-
-- 播放、暂停、跳过使用 lucide-react 图标。
-- 语言偏好使用 segmented control。
-- 音乐偏好使用 chips 或紧凑选择器。
-- 音量使用 slider。
-- 状态可以使用轻量 pulse 或进度条，但不要过度动画。
+- Primary background: deep warm night, not pure black.
+- Emotional glow: muted rose, amber, violet, and blue-green.
+- Glow should breathe softly and respond to state.
+- Do not use neon RGB, nightclub visualizers, cyberpunk overload, or decorative gradient blobs.
 
 ## Motion
 
-Framer Motion 应用于：
+- Official animation stack: GSAP and Framer Motion.
+- GSAP is used for continuous ambient motion.
+- Framer Motion is used for component transitions, state changes, hover, and tap.
+- Motion should be smooth, slow, and emotionally weighted.
+- Avoid aggressive bounce, rapid flashing, and EDM-style equalizer behavior.
 
-- 状态切换。
-- AI 分析中到推荐完成的过渡。
-- 歌曲卡片出现。
-- 音乐 fade in 状态的轻微反馈。
+## Buttons
 
-动画原则：
+All buttons, pills, chips, queue toggles, play/pause, next, and submit controls share one premium system:
 
-- 慢一点，柔一点。
-- 不要弹跳感过强。
-- 不要让内容晃动。
-- 不要影响输入效率。
+- Hover: subtle scale up, soft glow, border brightening, smooth easing.
+- Press/tap: slight scale down, glow tightens, tactile response, soft recovery.
+- Disabled: preserve size, spacing, and readable contrast.
+- Use lucide-react icons for familiar transport and tool actions.
 
-## Audio State UI
+## AI Input
 
-必须清楚表达当前音频状态：
+- Minimal horizontal AI input bar.
+- Single-line input, no textarea presentation.
+- Dark glassmorphism surface with soft breathing glow.
+- Right-side circular arrow submit button.
+- Focus state should feel like the AI is listening.
+- No giant CTA button.
 
-- AI 正在说话。
-- 音乐低音量陪底。
-- 音乐正在渐入。
-- 音乐正常播放。
-- 播放被浏览器阻止，需要用户点击。
-- TTS 失败但可以继续播放音乐。
+## Waveform
 
-状态文案应短：
+The waveform represents emotional resonance and AI presence, not raw audio analysis yet.
 
-- “AI DJ 正在说话”
-- “音乐保持低音量”
-- “音乐正在慢慢进入”
-- “点一下开始播放”
+Required states:
 
-## Empty And Error States
+- idle
+- AI thinking
+- AI speaking
+- music fading in
+- playing
+- paused
 
-空状态：
+The waveform should feel like sound moving through air in a deep night room. Avoid nightclub, gaming RGB, cyberpunk, or EDM visualizer language.
 
-> 说一句你现在的感觉，我来帮你放一首适合此刻的歌。
+## Future Daily AI Playlist
 
-输入为空：
-
-> 先告诉我你现在的感觉。
-
-AI 失败：
-
-> 我刚刚没能完整接住你的话。先给你放一首安静一点的。
-
-TTS 失败：
-
-> 这次我先用文字陪你，音乐还是可以继续。
-
-音频失败：
-
-> 这首歌暂时放不出来，我们换一首。
-
-## Accessibility
-
-- 所有按钮必须有可读 label。
-- 图标按钮需要 accessible name。
-- 保证键盘可用。
-- 保证移动端触控目标足够大。
-- 颜色不能作为唯一状态表达。
-- AI voice 不应自动大音量播放。
-
-## What To Avoid
-
-- 普通音乐 App 首页模板。
-- 大量榜单、排行榜、社交入口。
-- 过度科技感仪表盘。
-- 像心理咨询 App 的诊断报告。
-- 像客服聊天窗口。
-- 过多解释性文字。
-- 自动播放导致惊吓。
+Daily AI Playlist is future scope only. It should be documented as a future emotional companion feature and not implemented yet.

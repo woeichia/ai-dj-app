@@ -3,7 +3,10 @@ import type { DJRecommendation, EmotionAnalysis, EmotionRequest } from '../../ty
 import type { Song } from '../../types/music'
 import { rankSongs } from '../../utils/recommendationRanking'
 
-const moodDirections: Record<string, Pick<EmotionAnalysis, 'desiredEnergy' | 'intensity' | 'recommendationDirection'>> = {
+const moodDirections: Record<
+  string,
+  Pick<EmotionAnalysis, 'desiredEnergy' | 'intensity' | 'recommendationDirection'>
+> = {
   疲惫: {
     desiredEnergy: 'low',
     intensity: 'medium',

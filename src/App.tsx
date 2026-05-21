@@ -103,7 +103,12 @@ function App() {
       return
     }
 
-    if (status === 'playing' || status === 'fading-in' || status === 'voice-speaking' || status === 'music-ducked') {
+    if (
+      status === 'playing' ||
+      status === 'fading-in' ||
+      status === 'voice-speaking' ||
+      status === 'music-ducked'
+    ) {
       mixer.pause()
       return
     }
@@ -149,7 +154,7 @@ function App() {
           </motion.button>
           <div className="brand-mark">
             <span>Echo Soul</span>
-            <small>中文 AI 情绪 DJ</small>
+            <small>中文 AI 情绪陪伴</small>
           </div>
           <TimeWeatherCard time={currentTime} />
         </header>

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
-import { iconButtonMotion } from './motionPresets'
+import { iconButtonMotion, inputBarMotion } from './motionPresets'
 
 interface EmotionInputProps {
   value: string
@@ -22,8 +22,13 @@ export function EmotionInput({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
     >
-      <form
+      <motion.form
         className="ai-input-bar"
+        variants={inputBarMotion}
+        initial="rest"
+        animate="rest"
+        whileHover="hover"
+        whileFocus="focus"
         onSubmit={(event) => {
           event.preventDefault()
           onSubmit()
@@ -37,6 +42,7 @@ export function EmotionInput({
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder="今天发生了什么，或现在是什么感觉？"
+          autoComplete="off"
         />
         <motion.button
           className="ai-submit"
@@ -50,7 +56,7 @@ export function EmotionInput({
         >
           <ArrowUp size={18} aria-hidden="true" />
         </motion.button>
-      </form>
+      </motion.form>
       {error ? <p className="field-error">{error}</p> : null}
     </motion.section>
   )

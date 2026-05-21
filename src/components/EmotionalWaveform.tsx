@@ -1,4 +1,6 @@
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { gsap } from 'gsap'
 import type { PlaybackStatus } from '../types/audio'
 
 interface EmotionalWaveformProps {
@@ -10,14 +12,86 @@ const bars = [
   24, 60, 34, 74, 52, 29,
 ]
 
-const particleCount = 30
+const particleCount = 34
 
 export function EmotionalWaveform({ status }: EmotionalWaveformProps) {
+  const rootRef = useRef<HTMLDivElement | null>(null)
   const phase = getPhase(status)
   const movement = getMovement(status)
 
+  useEffect(() => {
+    if (!rootRef.current) return
+
+    const profile = getGsapProfile(status)
+    const context = gsap.context(() => {
+      const particles = gsap.utils.toArray<HTMLElement>('.star-field span')
+      const warmRibbon = rootRef.current?.querySelector<HTMLElement>('.ribbon-warm')
+      const coolRibbon = rootRef.current?.querySelector<HTMLElement>('.ribbon-cool')
+      const airGlow = rootRef.current?.querySelector<HTMLElement>('.air-glow')
+
+      gsap.set(particles, {
+        opacity: profile.particleBase,
+        scale: profile.particleScale,
+        filter: `blur(${profile.particleBlur}px)`,
+      })
+
+      particles.forEach((particle, index) => {
+        const direction = index % 2 === 0 ? 1 : -1
+        gsap.to(particle, {
+          x: direction * (profile.particleDrift + (index % 5) * 2),
+          y: -profile.particleLift - (index % 6) * 2,
+          opacity: profile.particlePeak + (index % 4) * 0.025,
+          scale: profile.particleScale + profile.particleScaleLift,
+          duration: profile.particleDuration + (index % 7) * 0.34,
+          delay: index * 0.06,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        })
+      })
+
+      if (warmRibbon) {
+        gsap.to(warmRibbon, {
+          x: profile.ribbonDrift,
+          scaleY: profile.ribbonScale,
+          opacity: profile.ribbonOpacity,
+          duration: profile.ribbonDuration,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        })
+      }
+
+      if (coolRibbon) {
+        gsap.to(coolRibbon, {
+          x: -profile.ribbonDrift * 0.8,
+          scaleY: profile.ribbonScale * 0.92,
+          opacity: profile.ribbonOpacity * 0.88,
+          duration: profile.ribbonDuration + 0.9,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        })
+      }
+
+      if (airGlow) {
+        gsap.to(airGlow, {
+          scale: profile.airScale,
+          opacity: profile.airOpacity,
+          duration: profile.airDuration,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        })
+      }
+    }, rootRef)
+
+    return () => context.revert()
+  }, [status])
+
   return (
     <motion.div
+      ref={rootRef}
       className={`emotional-visual phase-${phase}`}
       aria-hidden="true"
       animate={{
@@ -29,48 +103,21 @@ export function EmotionalWaveform({ status }: EmotionalWaveformProps) {
       }}
       transition={{ duration: movement.breathDuration, repeat: Infinity, ease: 'easeInOut' }}
     >
+      <div className="air-glow" />
       <div className="star-field">
         {Array.from({ length: particleCount }, (_, index) => (
-          <motion.span
+          <span
             key={index}
             style={{
               left: `${8 + ((index * 19) % 84)}%`,
               top: `${10 + ((index * 31) % 72)}%`,
             }}
-            animate={{
-              x: movement.particleX(index),
-              y: movement.particleY(index),
-              opacity: movement.particleOpacity(index),
-              scale: movement.particleScale(index),
-            }}
-            transition={{
-              duration: movement.particleDuration + (index % 6) * 0.32,
-              repeat: Infinity,
-              delay: index * 0.11,
-              ease: 'easeInOut',
-            }}
           />
         ))}
       </div>
 
-      <motion.div
-        className="wave-ribbon ribbon-warm"
-        animate={{
-          x: [-movement.ribbonDrift, movement.ribbonDrift * 0.75, -movement.ribbonDrift],
-          scaleY: movement.ribbonScale,
-          opacity: movement.ribbonOpacity,
-        }}
-        transition={{ duration: movement.ribbonDuration, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="wave-ribbon ribbon-cool"
-        animate={{
-          x: [movement.ribbonDrift * 0.85, -movement.ribbonDrift, movement.ribbonDrift * 0.85],
-          scaleY: movement.ribbonScaleAlt,
-          opacity: movement.ribbonOpacityAlt,
-        }}
-        transition={{ duration: movement.ribbonDuration + 0.8, repeat: Infinity, ease: 'easeInOut' }}
-      />
+      <div className="wave-ribbon ribbon-warm" />
+      <div className="wave-ribbon ribbon-cool" />
 
       <div className="wave-bars">
         {bars.map((height, index) => (
@@ -103,64 +150,69 @@ function getPhase(status: PlaybackStatus): string {
   return 'playing'
 }
 
+function getEnergy(status: PlaybackStatus): number {
+  if (status === 'idle' || status === 'paused') return 0.28
+  if (status === 'understanding' || status === 'searching' || status === 'preparing') return 0.52
+  if (status === 'voice-speaking' || status === 'music-ducked') return 0.84
+  if (status === 'fading-in') return 0.72
+  if (status === 'playing') return 0.56
+  return 0.4
+}
+
+function getGsapProfile(status: PlaybackStatus) {
+  const energy = getEnergy(status)
+  const quiet = status === 'idle' || status === 'paused'
+  const speaking = status === 'voice-speaking' || status === 'music-ducked'
+  const fading = status === 'fading-in'
+
+  return {
+    particleBase: 0.08 + energy * 0.16,
+    particlePeak: 0.18 + energy * 0.34,
+    particleScale: quiet ? 0.72 : 0.82 + energy * 0.2,
+    particleScaleLift: 0.16 + energy * 0.18,
+    particleBlur: quiet ? 0.4 : 0.15,
+    particleDrift: 4 + energy * 18,
+    particleLift: 4 + energy * 20,
+    particleDuration: quiet ? 7.6 : speaking ? 4.4 : fading ? 5.4 : 6.4,
+    ribbonDrift: 10 + energy * 30,
+    ribbonScale: 0.86 + energy * 0.34,
+    ribbonOpacity: 0.3 + energy * 0.36,
+    ribbonDuration: quiet ? 9.2 : speaking ? 5.4 : fading ? 6.2 : 7.6,
+    airScale: 1.05 + energy * 0.18,
+    airOpacity: 0.18 + energy * 0.18,
+    airDuration: quiet ? 8.4 : speaking ? 4.8 : 6.8,
+  }
+}
+
 function getMovement(status: PlaybackStatus) {
+  const energy = getEnergy(status)
   const quiet = status === 'idle' || status === 'paused'
   const thinking =
     status === 'understanding' || status === 'searching' || status === 'preparing'
   const speaking = status === 'voice-speaking' || status === 'music-ducked'
   const fading = status === 'fading-in'
-  const playing = status === 'playing'
-
-  const energy = quiet ? 0.28 : thinking ? 0.52 : speaking ? 0.92 : fading ? 0.78 : playing ? 0.58 : 0.4
 
   return {
     stageGlow: 18 + energy * 40,
     stageOpacity: 0.04 + energy * 0.1,
     breathDuration: quiet ? 7.4 : thinking ? 5.4 : speaking ? 3.8 : fading ? 4.4 : 6,
-    ribbonDrift: 8 + energy * 26,
-    ribbonDuration: quiet ? 9 : thinking ? 7.5 : speaking ? 5.2 : fading ? 6 : 7.8,
-    ribbonScale: [0.82, 0.96 + energy * 0.22, 0.86],
-    ribbonScaleAlt: [0.72, 0.9 + energy * 0.2, 0.76],
-    ribbonOpacity: [0.2 + energy * 0.22, 0.34 + energy * 0.46, 0.22 + energy * 0.2],
-    ribbonOpacityAlt: [0.18 + energy * 0.2, 0.3 + energy * 0.42, 0.18 + energy * 0.2],
-    particleDuration: quiet ? 7.5 : speaking ? 4.2 : fading ? 5.2 : 6.2,
-    particleX: (index: number) => [
-      0,
-      (index % 2 === 0 ? 1 : -1) * (3 + energy * 10 + (index % 4)),
-      0,
-    ],
-    particleY: (index: number) => [
-      0,
-      -1 * (2 + energy * 12 + (index % 5)),
-      0,
-    ],
-    particleOpacity: (index: number) => [
-      0.1 + energy * 0.18,
-      0.22 + energy * 0.56 + (index % 3) * 0.03,
-      0.1 + energy * 0.16,
-    ],
-    particleScale: (index: number) => [
-      0.72,
-      0.94 + energy * 0.42 + (index % 4) * 0.04,
-      0.78,
-    ],
     barDuration: quiet ? 2.8 : speaking ? 1.35 : fading ? 1.7 : 2.15,
     barDelay: quiet ? 0.035 : speaking ? 0.055 : 0.045,
     barScale: (index: number) => {
       const offset = (index % 5) * 0.08
       const low = 0.34 + energy * 0.22 + offset
-      const high = 0.58 + energy * 0.9 - offset * 0.4
+      const high = 0.58 + energy * 0.78 - offset * 0.4
       const mid = 0.44 + energy * 0.38
       return [low, high, mid]
     },
     barOpacity: (index: number) => [
       0.2 + energy * 0.26,
-      0.38 + energy * 0.55 + (index % 4) * 0.03,
+      0.38 + energy * 0.5 + (index % 4) * 0.03,
       0.24 + energy * 0.32,
     ],
     barGlow: (index: number) => [
       `drop-shadow(0 0 ${4 + energy * 8}px rgba(205, 174, 255, ${0.18 + energy * 0.12}))`,
-      `drop-shadow(0 0 ${8 + energy * 20 + (index % 3) * 4}px rgba(133, 224, 237, ${0.2 + energy * 0.22}))`,
+      `drop-shadow(0 0 ${8 + energy * 18 + (index % 3) * 4}px rgba(133, 224, 237, ${0.2 + energy * 0.2}))`,
       `drop-shadow(0 0 ${5 + energy * 10}px rgba(244, 180, 220, ${0.16 + energy * 0.14}))`,
     ],
   }

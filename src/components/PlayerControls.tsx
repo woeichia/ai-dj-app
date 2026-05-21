@@ -36,7 +36,7 @@ export function PlayerControls({
         whileHover="hover"
         whileTap="tap"
       >
-        {isPlaying ? <Pause size={24} /> : <Play size={24} />}
+        {isPlaying ? <Pause size={24} aria-hidden="true" /> : <Play size={24} aria-hidden="true" />}
       </motion.button>
       <motion.button
         className="round-control"
@@ -50,7 +50,7 @@ export function PlayerControls({
         whileHover="hover"
         whileTap="tap"
       >
-        <SkipForward size={22} />
+        <SkipForward size={22} aria-hidden="true" />
       </motion.button>
       <motion.button
         className="next-song"
@@ -63,7 +63,7 @@ export function PlayerControls({
         whileHover="hover"
         whileTap="tap"
       >
-        Next Song
+        换一首
       </motion.button>
     </section>
   )

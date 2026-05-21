@@ -1,143 +1,56 @@
 # Product Spec
 
-## 产品一句话
+## Product Direction
 
-一个中文 AI DJ 情绪音乐陪伴 PWA：用户说出此刻的心情，AI 用温柔的中文回应并推荐一首适合的歌，然后让声音和音乐以自然的方式衔接。
+Echo Soul is a Chinese AI emotional companion that recommends music as part of an intimate late-night emotional experience. The user describes how they feel; Echo Soul listens, responds in natural Chinese, recommends a song, and lets the music enter gently.
 
-## 目标用户
+It is not a dashboard, not a Spotify clone, not a productivity app, and not a generic chatbot.
 
-MVP 面向个人使用者，尤其适合这些场景：
+## Core Experience
 
-- 深夜独处，想听一点被理解的音乐。
-- 工作结束后，需要从紧绷状态过渡到放松。
-- 情绪低落、失眠、想念某个人，想要一首歌陪伴。
-- 不想主动搜索歌名，只想描述心情。
+1. User opens Echo Soul.
+2. The app presents an immersive emotional stage.
+3. User writes one short emotional message in a minimal AI input bar.
+4. Echo Soul enters AI thinking states.
+5. Echo Soul speaks in Chinese through a short companion-like intro.
+6. Music stays quiet under the AI voice.
+7. Music fades in softly after the AI finishes speaking.
+8. The user can pause, resume, or request the next recommendation.
 
-## 核心用户流程
+## AI Tone
 
-1. 用户打开 PWA。
-2. 用户看到一个中文输入入口，可以描述当下心情。
-3. 用户可选择音乐偏好和歌曲语言偏好。
-4. 用户提交后，App 进入分析状态。
-5. AI 返回情绪分析、推荐歌曲和中文推荐理由。
-6. AI voice 先播放 DJ 旁白。
-7. AI voice 播放期间，背景音乐保持较低音量。
-8. AI voice 结束后，音乐平滑 fade in 到正常音量。
-9. 用户可以重新输入情绪，生成下一次推荐。
+- Simplified Chinese.
+- Warm, calm, restrained, slightly poetic.
+- Companion-like, not assistant-like.
+- No clinical diagnosis, no overpromising, no customer-service phrasing.
 
-## MVP 功能
+## Current MVP Scope
 
-### 情绪输入
+- Mock emotional recommendation flow.
+- Mock songs with Chinese and English tracks.
+- Mock voice timing.
+- Mock audio ducking and fade-in states.
+- State-driven emotional waveform.
+- Premium button and input motion.
 
-用户可以输入自然中文，例如：
+## Non-Goals For This Phase
 
-- “今天有点累，但不想马上睡。”
-- “突然很想念一个人。”
-- “我想听一点安静但不要太悲伤的歌。”
-- “刚下班，脑子很满，想慢慢放空。”
+- Do not implement Daily AI Playlist.
+- Do not integrate OpenAI.
+- Do not integrate NetEase.
+- Do not add auth, backend, database, or persistent preference profile.
+- Do not add real audio analysis or Three.js.
 
-输入框应支持多行文本，移动端优先，中文排版舒适。
+## Future Daily AI Playlist
 
-### 偏好输入
+Daily AI Playlist is a future feature only:
 
-MVP 至少支持：
+- 每天第一次打开 app 时，AI 会主动生成当天推荐歌单。
+- 歌单根据用户近期情绪、互动内容、喜欢/跳过记录、播放历史慢慢学习。
+- AI 可以解释今天为什么推荐这个歌单。
+- 用户可以通过对话告诉 AI 喜欢或不喜欢某首歌。
+- AI 会逐渐建立个人音乐偏好画像。
+- 歌单可以包含中文和英文歌曲。
+- 未来接入 OpenAI + NetEase 后实现。
 
-- 音乐偏好：例如流行、民谣、R&B、电子、独立、摇滚、爵士、无偏好。
-- 歌曲语言偏好：中文、英文、不限制。
-
-偏好不应该让流程变复杂。默认值应足够好。
-
-### AI 情绪分析
-
-AI 输出应包含：
-
-- 主要情绪：例如疲惫、想念、平静、焦虑、孤独、释然。
-- 情绪强度：轻、中、重。
-- 推荐方向：例如“温柔慢歌”“低 BPM R&B”“克制的独立流行”。
-
-这些内容可以显示给用户，但不需要像诊断报告。UI 应更像 DJ 正在理解气氛。
-
-### 歌曲推荐
-
-MVP 使用 mock songs。每首歌至少包含：
-
-- `id`
-- `title`
-- `artist`
-- `language`
-- `moodTags`
-- `energy`
-- `bpm`
-- `reasonTags`
-- `audioUrl`
-- `coverUrl`
-
-推荐可以混合中文歌和英文歌，但必须尊重用户的歌曲语言偏好。
-
-### 中文推荐理由
-
-AI 用中文解释为什么选这首歌。解释应短、自然、有画面感，但不要矫情或过度心理分析。
-
-示例语气：
-
-> 我给你放一首慢一点的。它不是那种把情绪推得很满的歌，更像是在旁边留一盏灯，让你不用急着恢复精神。
-
-### AI Voice
-
-AI voice 播放中文 DJ 旁白。MVP 可先用 OpenAI TTS 返回音频，再由浏览器播放。
-
-要求：
-
-- 语音开始前不要突然播放大音量音乐。
-- 语音播放时音乐保持低音量。
-- 语音结束后音乐平滑进入正常音量。
-- 如果 TTS 失败，应显示可读的中文文案，并允许用户继续听歌。
-
-### 音频衔接
-
-AudioMixer 控制两个主要音频源：
-
-- DJ voice
-- music
-
-MVP 音量行为：
-
-- voice 开始前，music 可处于静音或低音量。
-- voice 播放期间，music volume 保持在 ducking volume。
-- voice 结束后，music 在短时间内 fade in 到 target volume。
-
-推荐默认值：
-
-- `duckingVolume = 0.16`
-- `targetMusicVolume = 0.75`
-- `fadeInMs = 2200`
-
-## 状态设计
-
-MVP 应覆盖这些状态：
-
-- 初始状态：等待用户输入。
-- 输入不足：提示用户说得再具体一点。
-- 分析中：AI 正在理解情绪。
-- 推荐完成：显示歌曲、推荐理由和播放控制。
-- 语音播放中：显示 AI DJ 正在说话。
-- 音乐渐入中：显示音乐正在进入。
-- 错误状态：AI、TTS 或音频播放失败。
-
-## 边界情况
-
-- 用户输入为空：不调用 AI，提示“先告诉我你现在的感觉。”
-- 用户输入过短：允许提交，但 AI 应温柔地基于有限信息推荐。
-- AI 请求失败：使用本地 fallback 推荐。
-- TTS 请求失败：显示文本 DJ 旁白，允许播放音乐。
-- 音频播放被浏览器阻止：提示用户点击播放。
-- mock audio 缺失：显示歌曲信息但禁用播放按钮。
-
-## PWA 要求
-
-MVP 应面向移动端 PWA：
-
-- 可安装。
-- 支持基础 manifest。
-- 图标和主题色与产品气质一致。
-- 离线能力可以后续增强，MVP 不强制缓存歌曲。
+This phase must only document the direction. Do not add UI, storage, data models, or recommendation logic for it yet.
