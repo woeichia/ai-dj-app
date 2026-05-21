@@ -1,5 +1,168 @@
 # Development Log
 
+## 2026-05-21 Normal Blending Particle Visibility Boost
+
+### Implemented
+
+- Tuned `EmotionParticleOrb` particle visibility for `THREE.NormalBlending`.
+- Increased fragment alpha so particles read as solid sand grains instead of a faint smudge.
+- Added a moderate luminance boost after texture/color sampling while avoiding pure-white blob behavior.
+- Raised the minimum point size to `3.5`.
+- Increased mood opacity values for the shader profile.
+- Slightly tightened the initial particle radius and depth spread so the 9000 particles form a more recognizable emotional orb/cloud.
+- Kept soft circular masks, texture sampling, curl motion, explicit geometry initialization, and layout/Aurora/lyrics/controls unchanged.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Browser check at `http://127.0.0.1:5173/`: particle cloud visibly restored with no console errors.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-21 Restored Safe Fluid Particle Motion
+
+### Implemented
+
+- Removed the temporary red box scene reference.
+- Removed visibility calibration debug color and alpha overrides.
+- Removed the raw `pointsMaterial` geometry test layer.
+- Restored Simplex/Curl shader motion with a reduced displacement scale so particles stay inside the camera frustum.
+- Restored emotional color and texture sampling while keeping a safe non-black fallback.
+- Kept explicit `THREE.BufferGeometry().setAttribute(...)` initialization from the geometry fix.
+- Kept `frustumCulled={false}`, `THREE.NormalBlending`, soft circular masks, and point-size clamp.
+- Left Aurora, lyrics, controls, layout, and AI dialogue overlay unchanged.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Browser check at `http://127.0.0.1:5173/`: red box removed, fluid particle cloud visible, canvas valid, no console errors.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-21 Particle Visibility Calibration Mode
+
+### Implemented
+
+- Added `VISIBILITY_CALIBRATION = true` in `EmotionParticleOrb`.
+- Added shader calibration uniforms for debug color, base point size, and calibration alpha behavior.
+- Temporarily bypassed cover texture influence in calibration mode.
+- Set calibration particle color to bright cyan-blue without pure white.
+- Forced calibration alpha through the circular particle mask so particles remain clearly visible.
+- Added `uBasePointSize` with calibration size `14.0` and a minimum shader point size of `4.0`.
+- Disabled frustum culling on the `points` object for visibility sanity checks.
+- Kept `THREE.NormalBlending`, soft circular particles, current shader architecture, and all layout/Aurora/lyrics/controls unchanged.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Browser check at `http://127.0.0.1:5173/`: calibrated shader canvas mounted with valid dimensions and no console errors.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-21 Curl Noise Sand Particle Stage
+
+### Implemented
+
+- Refined `EmotionParticleOrb` into a higher-density shader sand field using `THREE.Points` and custom GLSL.
+- Increased normal particle count to `9000` with a reduced-motion fallback of `2600`.
+- Replaced basic shader noise with 3D Simplex Noise and curl-style flow in the vertex shader.
+- Kept particle animation GPU-side with smoothed uniform transitions for gather, drift, pulse, swirl, opacity, and density.
+- Switched particle rendering to `THREE.NormalBlending` to avoid additive white burn-out.
+- Added soft circular particle gradients, distance-based point attenuation, varied grain sizes, and uneven spatial distribution.
+- Added subtle texture sampling from current cover art or fallback emotional texture as a low-strength color influence.
+- Preserved low-brightness, darker cyan/violet/rose tones and cinematic restrained motion.
+- Left Aurora, lyrics, controls, layout, and AI dialogue overlay unchanged.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Browser check at `http://127.0.0.1:5173/`: curl-noise shader canvas and atmosphere layer mounted with valid dimensions and no console errors.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-21 Softened Shader Particle Stage
+
+### Implemented
+
+- Reduced `EmotionParticleOrb` shader particle count from 980 to 540, and reduced-motion count from 520 to 280.
+- Strongly lowered shader point size, alpha, halo glow, aura opacity, and mood profile opacity.
+- Added shader-side brightness clamping to avoid white center burn-out.
+- Spread particles farther across X/Y/Z so the stage reads as airy emotional dust instead of a glowing blob.
+- Shifted mood colors toward darker cyan, violet, rose, and muted warm tones.
+- Reduced album-cover/fallback atmosphere texture opacity and brightness so it stays subtle behind particles.
+- Kept Aurora, lyrics, controls, layout, and AI dialogue overlay unchanged.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Browser check at `http://127.0.0.1:5173/`: softened shader canvas and dimmed atmosphere layer mounted with valid dimensions and no console errors.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-21 Shader Emotional Particle Stage
+
+### Implemented
+
+- Upgraded `EmotionParticleOrb` from instanced sphere particles to a shader-based `THREE.Points` particle stage.
+- Added custom GLSL vertex and fragment shaders for:
+  - noise-based organic drift
+  - gather/disperse behavior
+  - state-driven swirl density
+  - soft speaking pulse waves
+  - pointillist glow falloff
+- Kept layered depth behavior for inner core, middle emotional field, and outer dust.
+- Preserved subtle camera/cursor parallax and reduced-motion particle count scaling.
+- Kept album-cover/fallback emotional texture support behind the particle field.
+- Left Aurora, lyrics, controls, layout, and AI dialogue overlay unchanged.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Browser check at `http://127.0.0.1:5173/`: shader particle canvas and atmosphere layer mounted with valid dimensions and no console errors.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-21 Penderecki Garden Inspired Particle Stage
+
+### Implemented
+
+- Refined the particle stage without redesigning layout, Aurora, lyrics, quote, or controls.
+- Rebuilt the orb as a layered 3D emotional particle field:
+  - inner emotional core
+  - middle floating particle field
+  - outer drifting dust
+- Added subtle camera/cursor parallax for gentle spatial feedback.
+- Added a soft blurred atmosphere texture layer behind the particles.
+- Added optional cover-art support for the orb texture, with current song color as the fallback mood source.
+- Preserved restrained state behavior for idle, listening, thinking, speaking, playing, fading, and paused states.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Browser check at `http://127.0.0.1:5173/`: orb canvas and atmosphere layer mounted with valid dimensions and no console errors.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-21 Organic Emotion Particle Orb
+
+### Implemented
+
+- Refined only `src/components/visual/EmotionParticleOrb.tsx`; layout, text, controls, and Aurora remain unchanged.
+- Replaced the rigid dotted-sphere particle cloud with layered organic particles:
+  - inner soft core
+  - outer drifting particles
+  - subtle orbit dust
+- Added distinct restrained motion behavior for idle, listening, thinking, speaking, fading, playing, and paused states.
+- Removed hard orbit ring geometry from the orb so the emotional presence reads through particles instead of visible mechanical rings.
+- Kept particle counts modest and respected reduced-motion scaling for mobile performance.
+
+### Verification
+
+- `npm.cmd run lint`: passed.
+- `npm.cmd run build`: passed.
+- Browser check at `http://127.0.0.1:5173/`: orb R3F canvas mounted with valid dimensions and no console errors.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
 ## 2026-05-21 Echo Soul Design System
 
 ### Implemented

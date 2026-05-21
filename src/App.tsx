@@ -167,6 +167,8 @@ function App() {
             status={status}
             mood={recommendation?.analysis.primaryEmotion}
             listening={isListening}
+            coverUrl={recommendation?.song.coverUrl}
+            accentColor={recommendation?.song.color}
           />
         </Suspense>
       </div>

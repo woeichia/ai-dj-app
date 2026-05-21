@@ -17,5 +17,6 @@ export interface Song {
   shortReason: string
   reasonTags: string[]
   color: string
+  coverUrl?: string
   duration: string
 }
