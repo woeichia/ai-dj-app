@@ -1,5 +1,13 @@
 # Development Log
 
+## 2026-05-21 Echo Soul Design System
+
+### Implemented
+
+- Created `docs/ECHO_SOUL_DESIGN_SYSTEM.md` as the permanent creative direction and visual rulebook for Echo Soul.
+- Defined concise rules for philosophy, atmosphere, motion, typography, AI behavior, particles, aurora, glassmorphism, layout, voice interaction, interaction hierarchy, technical direction, and future evolution.
+- Clarified that Echo Soul is an emotional AI companion for all emotional contexts, not late-night only.
+
 ## 2026-05-21 Aurora Gradient Ticker Refinement
 
 ### Implemented
