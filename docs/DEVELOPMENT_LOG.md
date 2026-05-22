@@ -1,5 +1,19 @@
 # Development Log
 
+## 2026-05-22 GPGPU Fluid Sand Planning Docs
+
+### Implemented
+
+- Created `docs/GPGPU_FLUID_SAND_PLAN.md` to define the future production plan for Echo Soul's GPGPU fluid sand particle system.
+- Created `docs/PRODUCTION_ROADMAP.md` to connect the particle simulation plan with broader production priorities.
+- Documented that the GPGPU fluid sand system is planning-only and should not trigger implementation or layout changes yet.
+
+### Verification
+
+- Documentation-only change.
+- No app code, layout, Aurora, lyrics, controls, or particle runtime behavior changed.
+- Build not run because no runtime code changed.
+
 ## 2026-05-21 Normal Blending Particle Visibility Boost
 
 ### Implemented
