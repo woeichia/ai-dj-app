@@ -1,5 +1,229 @@
 # Development Log
 
+## 2026-05-22 Fresh GPUComputationRenderer Prototype
+
+### Implemented
+
+- Created `src/components/visual/gpgpu/GpgpuComputeParticles.tsx` as a fresh isolated GPGPU prototype.
+- Added local TypeScript declarations for `three/examples/jsm/misc/GPUComputationRenderer.js`.
+- Used official `GPUComputationRenderer` style variables: `texturePosition` and `textureVelocity`.
+- Kept the prototype at `64 x 64` particles.
+- Implemented velocity persistence, damping, and slow internal flow.
+- Render shader samples the current computed position texture through `aReference`.
+- Did not integrate the prototype into `EmotionParticleOrb` or production UI.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+- No Aurora, layout, lyrics, controls, AI overlay, or production particle behavior changed.
+
+## 2026-05-22 GPGPU Reference Research
+
+### Implemented
+
+- Created `docs/GPGPU_REFERENCE_NOTES.md` with working GPGPU particle references.
+- Documented official `GPUComputationRenderer`, Three.js `webgl_gpgpu_birds`, R3F flow-field particles, Codrops GPGPU particles, and `bgstaal/gpuparticles`.
+- Recommended rebuilding the future GPGPU path from a proven `GPUComputationRenderer` reference instead of extending the broken manual debug implementation.
+- Left app UI and `EmotionParticleOrb` unchanged.
+
+### Verification
+
+- Documentation-only change.
+- No app code, Aurora, layout, lyrics, controls, overlays, or particle runtime behavior changed.
+
+## 2026-05-22 Restored Stable Shader Particle Orb
+
+### Implemented
+
+- Stopped rendering the experimental GPGPU debug sandbox from `EmotionParticleOrb`.
+- Removed the temporary debug label and red helper dot from the production render path by restoring the stable shader particle stage.
+- Left the GPGPU files in `src/components/visual/gpgpu/` as experimental sandbox code only.
+- Kept GPGPU planning and shader particle documentation intact for future work.
+- Kept Aurora, layout, lyrics, controls, and overlays unchanged.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-22 Centered GPGPU Debug Cluster
+
+### Implemented
+
+- Tightened `GpgpuParticleDebug` initial particle positions into a centered debug cluster.
+- Clamped sampled GPGPU positions to `x: -1.4..1.4`, `y: -0.9..0.9`, `z: -0.6..0.6`.
+- Reduced debug texture motion amplitude so particles stay in the central formation.
+- Kept cyan/rose debug colors for sampled-position vs fallback-position distinction.
+- Kept `GPGPU DEBUG ACTIVE` label and safe fallback behavior.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+- No Aurora, lyrics, controls, AI overlay, or layout changes were made.
+
+## 2026-05-22 Safe Texture Position Fallback Debug
+
+### Implemented
+
+- Added safe `uPositionTexture` sampling guards in `GpgpuParticleDebug`.
+- Clamped sampled texture positions into a visible camera range.
+- Added fallback to original geometry position when sampled positions are invalid, too far, or unexpectedly near zero.
+- Added temporary debug colors: cyan for sampled texture positions and rose for fallback geometry positions.
+- Tightened initial debug position texture distribution to stay inside the visible camera range.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+- No Aurora, lyrics, controls, AI overlay, or layout changes were made.
+
+## 2026-05-22 Reconnected GPGPU Texture-Driven Debug Motion
+
+### Implemented
+
+- Reconnected `GpgpuParticleDebug` render vertex shader to sample `uPositionTexture` for particle positions.
+- Removed the temporary shader-time geometry-position animation from the render vertex shader.
+- Added `GPGPU_DEBUG_TEXTURE_MOTION` to drive visible calm motion inside the position simulation texture.
+- Kept the debug label and red helper dot temporarily.
+- Kept the particle group from rotating; motion is intended to come from the computed position texture.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+- No Aurora, lyrics, controls, AI overlay, or layout changes were made.
+
+## 2026-05-22 Shader-Time Particle Motion Isolation
+
+### Implemented
+
+- Updated `GpgpuParticleDebug` so particles temporarily ignore `uPositionTexture` for position animation.
+- Animated particle positions directly in the vertex shader from static geometry `position` and `uTime`.
+- Kept `GPGPU DEBUG ACTIVE` label and red helper dot for mount/useFrame confirmation.
+- Preserved the GPGPU compute path in the component for later reconnect testing.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+- No Aurora, lyrics, controls, AI overlay, or layout changes were made.
+
+## 2026-05-22 Lowest-Level GPGPU Debug Visibility
+
+### Implemented
+
+- Added a visible `GPGPU DEBUG ACTIVE` label inside the isolated particle debug sandbox.
+- Added a small red helper sphere animated by `useFrame` to confirm the Canvas frame loop is running.
+- Added `DEBUG_SHADER_TIME_FALLBACK` so debug particles can animate directly from `uTime` before relying on GPGPU textures.
+- Populated the debug geometry `position` attribute with real particle positions for shader-time fallback testing.
+- Kept the GPGPU compute passes and `uPositionTexture` sampling path in place for reconnect testing.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+- No Aurora, lyrics, controls, AI overlay, or layout changes were made.
+
+## 2026-05-22 Isolated GPGPU Particle Debug Sandbox
+
+### Implemented
+
+- Created `src/components/visual/gpgpu/GpgpuParticleDebug.tsx` as an isolated minimal GPGPU particle simulation sandbox.
+- Added `USE_GPGPU_DEBUG = true` in `EmotionParticleOrb` so the orb renders the debug sandbox temporarily.
+- Kept the false toggle path wired to the current production shader orb.
+- The debug sandbox uses `64 x 64` particles, GPU position and velocity textures, per-frame compute passes, and a render shader that samples `uPositionTexture`.
+- The debug sandbox has no group rotation; motion comes from velocity and position texture updates.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+- No Aurora, lyrics, controls, AI overlay, or layout changes were made.
+
+## 2026-05-22 GPGPU Particle-Level Motion Debug
+
+### Implemented
+
+- Disabled the temporary CPU sanity rotation on the GPGPU points group.
+- Kept the GPGPU particle cloud centered instead of rotating the entire group.
+- Added particle-level internal drift in the GPGPU render vertex shader after sampling computed `uPositionTexture`.
+- Updated the render shader uniforms every frame with `uTime` and `uInternalMotion`.
+- Preserved current density, brightness, Aurora, layout, lyrics, controls, and AI overlay.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-22 Particle Motion Path Sanity Debug
+
+### Implemented
+
+- Added a gentle CPU sanity rotation to the GPGPU points path to verify the Canvas/useFrame path is active.
+- Added the same gentle CPU sanity rotation to the shader fallback points path so fallback rendering is not mistaken for a frozen GPGPU pipeline.
+- Added a dev-only `ACTIVE_PARTICLE_PATH` console log to identify whether GPGPU, shader fallback, or DOM fallback is active.
+- Kept GPGPU render shader texture sampling intact: points still sample the current computed position texture through `uPositionTexture`.
+- Kept particle brightness, density, layout, Aurora, lyrics, controls, and AI overlay unchanged.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+
+## 2026-05-22 GPGPU Pipeline Motion Debug
+
+### Implemented
+
+- Added `GPGPU_DEBUG_MOTION` to prove texture-driven particle positions are moving.
+- Added explicit code comments marking the velocity texture update, position texture update, compute pass, and render shader texture sampling.
+- Moved compute resources into the GPGPU stage instance instead of relying on a shared global compute scene.
+- Added a temporary slow swirl and drift inside the position simulation shader while keeping brightness and particle appearance unchanged.
+- Kept the fallback shader particle orb intact.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+- No Aurora, lyrics, controls, AI overlay, or layout changes were made.
+
+## 2026-05-22 GPGPU Motion Activation Calibration
+
+### Implemented
+
+- Tuned the experimental GPGPU Phase A path so particle motion is visibly active.
+- Increased flow-force amplitude through a debug-safe Phase A motion calibration scale.
+- Added a soft tangential swirl force and subtle vertical drift in the velocity shader.
+- Preserved velocity persistence, damping, `THREE.NormalBlending`, density, particle appearance, and current layout.
+- Updated `docs/GPGPU_FLUID_SAND_PLAN.md` and `docs/SHADER_PARTICLE_PLAYBOOK.md` with motion calibration notes.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+- No Aurora, lyrics, controls, AI overlay, or layout changes were made.
+
+## 2026-05-22 GPGPU Fluid Sand Phase A Foundation
+
+### Implemented
+
+- Added an experimental GPGPU/FBO ping-pong particle simulation foundation under `src/components/visual/gpgpu/`.
+- Created `128 x 128` simulation textures for `16,384` particles.
+- Added GPU position and velocity texture simulation with velocity persistence.
+- Added damping so particle movement keeps memory and gradually slows.
+- Added a gentle shader-side flow force for calm organic motion.
+- Integrated the GPGPU path into `EmotionParticleOrb` behind a safe Phase A gate.
+- Preserved the existing shader particle orb as fallback when GPGPU is unavailable or reduced motion is enabled.
+- Created `docs/SHADER_PARTICLE_PLAYBOOK.md`.
+- Updated `docs/GPGPU_FLUID_SAND_PLAN.md` with Phase A implementation status.
+
+### Verification
+
+- `npm.cmd run build`: passed.
+- Build still emits the existing Vite chunk-size warning for the lazy Three/R3F orb chunk.
+- No Aurora, lyrics, controls, AI overlay, or layout changes were made.
+
 ## 2026-05-22 Vibe Motion System Planning Docs
 
 ### Implemented

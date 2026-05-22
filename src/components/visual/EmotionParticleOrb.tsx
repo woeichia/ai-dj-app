@@ -272,7 +272,7 @@ export function EmotionParticleOrb({
         onError={() => setWebglFailed(true)}
         style={{ position: 'relative', zIndex: 2 }}
       >
-        <ShaderParticleStage
+        <ParticleStageWithGpgpuFallback
           orbState={orbState}
           moodTone={moodTone}
           reducedMotion={reducedMotion}
@@ -283,6 +283,30 @@ export function EmotionParticleOrb({
       </Canvas>
       <div className="emotion-orb-vignette" />
     </div>
+  )
+}
+
+function ParticleStageWithGpgpuFallback({
+  orbState,
+  moodTone,
+  reducedMotion,
+  coverUrl,
+  accentColor,
+}: {
+  orbState: OrbState
+  moodTone: MoodTone
+  reducedMotion: boolean
+  coverUrl?: string
+  accentColor: string
+}) {
+  return (
+    <ShaderParticleStage
+      orbState={orbState}
+      moodTone={moodTone}
+      reducedMotion={reducedMotion}
+      coverUrl={coverUrl}
+      accentColor={accentColor}
+    />
   )
 }
 

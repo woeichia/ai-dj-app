@@ -43,6 +43,13 @@ This document is planning only. Do not implement code from this plan until a ded
 - Start with a low particle count, around `16k`.
 - Validate simulation stability before visual polish.
 - Keep the prototype isolated from the production emotional stage until verified.
+- Current implementation status: Phase A foundation has started as an experimental render path inside `EmotionParticleOrb`.
+- Current texture size: `128 x 128`, or `16,384` particles.
+- Current simulation data: GPU position texture and GPU velocity texture.
+- Current forces: gentle shader-side flow force, damping, and velocity persistence.
+- Current fallback: existing shader particle orb remains available when GPGPU is unsupported or reduced motion is enabled.
+- Current exclusions: no image attraction, no album-cover magnetic field, no audio-reactive force, and no high particle counts.
+- Motion activation note: Phase A uses a temporary motion calibration scale so velocity persistence and position feedback are visibly testable without increasing particle brightness.
 
 ### Phase B: Album Cover Target Field
 
