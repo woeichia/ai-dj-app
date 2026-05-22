@@ -22,10 +22,18 @@ Roadmap for moving Echo Soul from emotional frontend MVP toward a production-gra
 - Stabilize the emotional particle stage across mobile and desktop.
 - Keep Aurora subtle, cinematic, and behind all emotional UI.
 - Preserve readable AI dialogue and lyric-like emotional copy.
+- Use `docs/VIBE_MOTION_SYSTEM.md` as the system-wide rulebook for emotional motion rhythm.
 - Improve reduced-motion behavior.
 - Keep visual tuning consistent with `ECHO_SOUL_DESIGN_SYSTEM.md`.
 
-## 4. GPGPU Fluid Sand System
+## 4. Vibe Motion System
+
+- Connect particle, aurora, subtitle, quote, overlay, voice state, and controls through one emotional rhythm.
+- Define global motion behavior for idle, listening, thinking, speaking, music fading in, playing, and paused states.
+- Keep motion calm, cinematic, breathing, emotionally restrained, and premium.
+- Treat UI/UX Pro Max as guidance for spacing, hierarchy, timing, layering, and button feedback only.
+
+## 5. GPGPU Fluid Sand System
 
 - Use `docs/GPGPU_FLUID_SAND_PLAN.md` as the production plan for the future particle simulation.
 - Build the system only in a dedicated implementation phase.
@@ -33,14 +41,14 @@ Roadmap for moving Echo Soul from emotional frontend MVP toward a production-gra
 - Add album-cover target fields only after the simulation is stable.
 - Add AI, voice, and music intensity controls after the visual system is reliable.
 
-## 5. Provider Evolution
+## 6. Provider Evolution
 
 - Keep mock songs until the frontend experience is stable.
 - Add OpenAI reasoning only after product states and fallback behavior are clear.
 - Add OpenAI TTS only after voice timing, ducking, and subtitle behavior are defined.
 - Add NetEase or other music providers only after licensing and playback constraints are explicit.
 
-## 6. Performance And Accessibility Gates
+## 7. Performance And Accessibility Gates
 
 - Mobile-safe first.
 - Avoid CPU-heavy per-particle updates.
@@ -48,7 +56,7 @@ Roadmap for moving Echo Soul from emotional frontend MVP toward a production-gra
 - Avoid autoplay, sudden volume jumps, or unexpected queue changes.
 - Verify frontend changes with `npm run build` and browser inspection when runtime behavior changes.
 
-## 7. Documentation Gates
+## 8. Documentation Gates
 
 - Update `DEVELOPMENT_LOG.md` after meaningful changes.
 - Update technical docs before implementing broad architecture changes.

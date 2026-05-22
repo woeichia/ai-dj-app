@@ -1,5 +1,19 @@
 # Development Log
 
+## 2026-05-22 Vibe Motion System Planning Docs
+
+### Implemented
+
+- Created `docs/VIBE_MOTION_SYSTEM.md` to define Echo Soul's system-wide emotional motion rhythm.
+- Updated `docs/PRODUCTION_ROADMAP.md` to reference the Vibe Motion System as a near-term production rulebook.
+- Documented global motion states for idle, listening, thinking, speaking, music fading in, playing, and paused.
+
+### Verification
+
+- Documentation-only change.
+- No app code, layout, Aurora, lyrics, controls, or particle runtime behavior changed.
+- Build not run because no runtime code changed.
+
 ## 2026-05-22 GPGPU Fluid Sand Planning Docs
 
 ### Implemented
